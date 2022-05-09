@@ -1,9 +1,9 @@
 {
   "mode": "development",
   "ganacheHost": "127.0.0.1",
-  "ganachePort": "8545",
+  "ganachePort": "7545",
   "ganacheNetworkId": "*",
-  "networkId": "1337",
+  "networkId": "5777",
 
   "liveHost": "",
   "liveNetworkId": "8000",
