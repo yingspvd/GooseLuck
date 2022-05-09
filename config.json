@@ -1,0 +1,12 @@
+{
+  "mode": "development",
+  "ganacheHost": "127.0.0.1",
+  "ganachePort": "8545",
+  "ganacheNetworkId": "*",
+  "networkId": "1337",
+
+  "liveHost": "",
+  "liveNetworkId": "8000",
+  "deployerAddress": "",
+  "deployerPrivatekey": ""
+}
