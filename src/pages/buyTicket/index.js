@@ -1,16 +1,28 @@
-import React from 'react'
+import React from "react";
 import Navbar from "../../components/Navbar";
+
+import {
+  Container,
+  Background,
+  Logo,
+  StyledImage,
+  Text,
+  RewardText,
+} from "./styled";
 
 export default function buyTicket() {
   return (
-    
-    <div>
+    <Container>
       <Navbar />
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-        Buy Ticket
-    </div>
-  )
+      <Background>
+        <Logo>
+          <StyledImage src="/gooseluck.svg" />
+        </Logo>
+        <RewardText>
+          <Text>368.59 ETH</Text>
+        </RewardText>
+      </Background>
+      Buy Ticket
+    </Container>
+  );
 }

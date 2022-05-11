@@ -1,15 +1,12 @@
 import styled from "styled-components";
 
 export const StyledNav = styled.div`
+  display: flex;
   width: 100%;
   height: 50px;
   background: #074635;
-  position: fixed;
-  top: 0;
   z-index: 100;
   overflow: hidden;
-  display: flex;
-  align-items: center;
 `;
 
 export const Logo = styled.div`
@@ -18,7 +15,7 @@ export const Logo = styled.div`
   margin-left: 1em;
   margin-top: 5px;
   cursor: pointer;
-  display:flex;
+  display: flex;
 `;
 
 export const StyledImage = styled.img`
@@ -27,16 +24,16 @@ export const StyledImage = styled.img`
 `;
 
 export const StyledLink = styled.a`
-  color: #FFFFFF;
+  color: #ffffff;
   text-decoration: none;
   &: hover {
-    color: #EEC829;
+    color: #eec829;
   }
 `;
 
 export const Menu = styled.div`
   display: flex;
-  width: 75%;
+  width: 80%;
   justify-content: center;
   align-items: center;
 `;
@@ -45,4 +42,5 @@ export const MenuItem = styled.div`
   font-size: 15px;
   letter-spacing: 2px;
 `;
+
 export default StyledNav;
