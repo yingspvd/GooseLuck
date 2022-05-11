@@ -20,8 +20,8 @@ export default function Navbar() {
       </Logo>
       <Menu>
         <MenuItem>
-          <StyledLink style={{marginRight: "50px"}}>Buy Tickets</StyledLink>
-          <StyledLink style={{marginRight: "50px"}}>Result</StyledLink>
+          <StyledLink style={{ marginRight: "50px" }}>Buy Tickets</StyledLink>
+          <StyledLink style={{ marginRight: "50px" }}>Result</StyledLink>
           <StyledLink>My Tickets</StyledLink>
         </MenuItem>
       </Menu>
