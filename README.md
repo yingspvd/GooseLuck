@@ -1,5 +1,11 @@
-# Goose Luck
+# Goose Luck 🦆
 This project is a part CPE494 Blockchain Technology course. To learn about the Truffle and Ganache Ethereum smart contract development platform, as well as basics of how smart contracts work and how they are deployed onto the chain.
+
+## ☑️ Requirements
+* Ganache
+* Truffle
+* Metamask
+* yarn
 
 ## ⚙️ Project Installation
 ```sh
@@ -15,7 +21,7 @@ yarn install
 ```
 3. Compile a Truffle project and push the smart contracts to the Ethereum blockchain
 ```sh
-truffle compile && truffle migrate --reset --network=development
+truffle compile && truffle migrate --reset 
 ```
 4. Start the local web server
 ```sh
