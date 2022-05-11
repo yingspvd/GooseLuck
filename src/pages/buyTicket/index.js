@@ -29,7 +29,9 @@ export default function buyTicket() {
       </GreenBackground>
       <WhiteBackground></WhiteBackground>
       <BrownBackground>
-        <InputBar></InputBar>
+        <InputBar>
+          <input></input>
+        </InputBar>
         <Button></Button>
       </BrownBackground>
     </Container>
