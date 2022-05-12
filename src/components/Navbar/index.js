@@ -5,19 +5,24 @@
 import React from "react";
 import {
   StyledNav,
-  Logo,
+  ItemContainer,
   StyledImage,
   StyledLink,
   Menu,
   MenuItem,
+  StyledMetamask,
+  Text,
+  TextContainer,
 } from "./styled";
+
+const wallet = "0.321"
 
 export default function Navbar() {
   return (
     <StyledNav>
-      <Logo>
+      <ItemContainer>
         <StyledImage src="/gooseLuckLogo.svg" />
-      </Logo>
+      </ItemContainer>
       <Menu>
         <MenuItem>
           <StyledLink style={{ marginRight: "50px" }}>Buy Tickets</StyledLink>
@@ -27,6 +32,12 @@ export default function Navbar() {
           <StyledLink>My Tickets</StyledLink>
         </MenuItem>
       </Menu>
+      <ItemContainer>
+        <StyledMetamask src="/MetaMask.png" />
+        <TextContainer>
+          <Text>{wallet} ETH</Text>
+        </TextContainer>
+      </ItemContainer>
     </StyledNav>
   );
 }
