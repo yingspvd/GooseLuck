@@ -46,9 +46,9 @@ export const MenuItem = styled.div`
 `;
 
 export const StyledMetamask = styled.img`
-  margin-top: 7px;
-  margin-bottom: 7px;
-  margin-right: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 20px;
 `;
 
 export const TextContainer = styled.div`

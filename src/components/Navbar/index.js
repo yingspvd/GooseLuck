@@ -15,7 +15,7 @@ import {
   TextContainer,
 } from "./styled";
 
-const wallet = "0.321"
+const wallet = "0.321";
 
 export default function Navbar() {
   return (
