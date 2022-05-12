@@ -11,7 +11,10 @@ const FirstLottery = () => {
   const [myBalance, setMyBalance] = useState(0);
   const [lotteryNumber, setLotteryNumber] = useState(0);
   const [reward, setReward] = useState(0);
-  const [lottery, setLottery] = useState();
+  const [lottery, setLottery] = useState("");
+  const [result, setResult] = useState("");
+  const [allResult, setAllResult] = useState("");
+  // const [winDate, setDate] = useState("");
 
   const getMyBalance = useCallback(async () => {
     const _balance = await web3.eth.getBalance(account);
@@ -38,20 +41,56 @@ const FirstLottery = () => {
     setReward(Web3.utils.fromWei(_reward, "ether"));
   }, [Lottery.methods]);
 
+  /////////////////////////////////////////////////////
   const showLottery = useCallback(async () => {
     const lottery = await Lottery.methods.showLottery().call();
     setLottery(lottery);
   }, [Lottery.methods]);
 
+  /////////////////////////////////////////////////////
+  const handleShowResult = async () => {
+    const _result = randomNumber(100, 999);
+    const keep = await Lottery.methods.keepResult(_result).call();
+    console.log("KEEP ", keep);
+    setResult(_result);
+    getAllResult();
+  };
+
+  const getAllResult = useCallback(async () => {
+    const _allResult = await Lottery.methods.getAllResult().call();
+    // console.log("result: ", _allResult);
+    setAllResult(_allResult);
+  }, [Lottery.methods]);
+
+  const randomNumber = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
+
+  // const keepWinDate = useCallback(async () => {
+  //   // let date = new Date().getTime();
+  //   // let dateInUnixTimestamp = date / 1000;
+  //   const date = await Lottery.methods.keepWinDate().call();
+  //   console.log("WIN ", date);
+  // }, [Lottery.methods]);
+
+  // const getWinDate = useCallback(async () => {
+  //   let dateInUnixTimestamp = await Lottery.methods.getWinDate().call();
+  //   // let date = new Date(dateInUnixTimestamp * 1000);
+  //   console.log("DATE: ", dateInUnixTimestamp);
+  //   // setDate(date);
+  // }, [Lottery.methods]);
+
   useEffect(() => {
     getMyBalance();
     getTotalReward();
     showLottery();
-  }, [getMyBalance, getTotalReward, showLottery]);
+    getAllResult();
+  }, [getMyBalance, getTotalReward, showLottery, getAllResult]);
 
   return (
     <>
       <h1>My Balance: {myBalance}</h1>
+      <hr />
       <h1>Total Reward: {reward}</h1>
       <div>
         <input
@@ -59,7 +98,16 @@ const FirstLottery = () => {
           onChange={(e) => setLotteryNumber(e.target.value)}
         ></input>
         <button onClick={handleBuyLottery}>Buy Ticket</button>
-        <h2>Lottery Number: {lottery}</h2>
+        <br />
+        <br />
+        <hr />
+        <h1>Lottery Number: {lottery}</h1>
+        <hr />
+        <button onClick={handleShowResult}>Announce Result</button>
+        <h1>Result: {result}</h1>
+        <h2>History Result: {allResult}</h2>
+        <hr />
+        {/* <h1>Date: {winDate}</h1> */}
       </div>
     </>
   );
