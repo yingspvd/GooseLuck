@@ -8,6 +8,9 @@ export const StyledNav = styled.div`
   position: fixed;
   z-index: 100;
   overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 `;
 
 export const ItemContainer = styled.div`

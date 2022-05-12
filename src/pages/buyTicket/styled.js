@@ -5,6 +5,9 @@ export const Container = styled.div`
   flex-direction: column;
   height: 100vh;
   width: 100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 `;
 
 export const GreenBackground = styled.div`
