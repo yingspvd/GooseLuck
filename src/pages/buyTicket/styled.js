@@ -9,16 +9,68 @@ export const Container = styled.div`
 
 export const GreenBackground = styled.div`
   width: 100%;
-  height: 50%;
+  height: 45%;
   background: #074635;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const WhiteBackground = styled.div`
   width: 100%;
-  height: 20%;
+  height: 25%;
   background: #ffffff;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
+export const TimeContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const DateContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const TimerDays = styled.div`
+  font-size: 48px;
+  color: #39b090;
+`;
+
+export const TimerHours = styled.div`
+  font-size: 48px;
+  color: #f96666;
+`;
+
+export const TimerMinutes = styled.div`
+  font-size: 48px;
+  color: #66c4f9;
+`;
+
+export const TimerSeconds = styled.div`
+  font-size: 48px;
+  color: #eec829;
+`;
+
+export const InfoBlack = styled.div`
+  font-size: 13px;
+  margin-top: 10px;
+`;
+
+export const Separate = styled.div`
+  width: 30px;
+  border-radius: 50px;
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  transform: rotate(90deg);
+  margin-right: 30px;
+  margin-left: 30px;
 `;
 
 export const BrownBackground = styled.div`
@@ -28,35 +80,51 @@ export const BrownBackground = styled.div`
   flex-direction: column;
   overflow: hidden;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 `;
 
 export const Logo = styled.div`
   width: 100%;
   position: relative;
-  margin-top: 50px;
+  margin-top: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 export const StyledImage = styled.img`
-  width: 120px;
+  width: 90px;
 `;
 
 export const RewardText = styled.div`
-  display: flex;
-  width: 100%;
-  margin-top: 25px;
-  justify-content: center;
-  align-items: center;
+  margin-top: 20px;
+  color: #ffffff;
+  font-size: 60px;
+  letter-spacing: 20px;
 `;
 
-export const Text = styled.div`
+export const InfoBrown = styled.div`
+  color: #cdad9e;
+  font-size: 20px;
+  letter-spacing: 5px;
+`;
+
+export const InfoYellow = styled.div`
+  color: #eec829;
+  font-size: 24px;
+  letter-spacing: 5px;
+  margin-top: 20px;
+`;
+
+export const InfoWhite = styled.div`
   color: #ffffff;
-  font-size: 70px;
-  letter-spacing: 20px;
+  font-size: 24px;
+  letter-spacing: 5px;
+`;
+
+export const InputContainer = styled.div`
+  display: flex;
 `;
 
 export const InputBar = styled.div`
@@ -69,15 +137,18 @@ export const InputBar = styled.div`
   border-radius: 10px;
 `;
 
-export const InputNumber = styled.div`
-  width: 40% !important;
-  height: 100% !important;
+export const InputNumber = styled.input`
   color: #4c403f;
-  background-color: #ffffff;
+  background-color: #CDAD9E;
+  width: 250px;
   border: none;
-  padding-left: 20px;
-  margin-left: 1px;
+  border-radius: 10px;
+  margin-right: 20px;
+  text-align: center;
+  font-size: 14px;
   &::placeholder {
     letter-spacing: 2px;
+    text-align: center;
   }
+}
 `;

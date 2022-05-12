@@ -12,9 +12,10 @@ const FirstLottery = () => {
   const [lotteryNumber, setLotteryNumber] = useState(0);
   const [reward, setReward] = useState(0);
   const [lottery, setLottery] = useState("");
-  const [result, setResult] = useState("");
+  const [allLottery, setAllLottery] = useState("");
+  const [result, setResult] = useState(0);
   const [allResult, setAllResult] = useState("");
-  // const [winDate, setDate] = useState("");
+  const [isWin, setIsWin] = useState("");
 
   const getMyBalance = useCallback(async () => {
     const _balance = await web3.eth.getBalance(account);
@@ -31,6 +32,7 @@ const FirstLottery = () => {
       getTotalReward();
       getMyBalance();
       showLottery();
+      showAllLottery();
     } else {
       alert("Number should have only 3 digits");
     }
@@ -43,22 +45,25 @@ const FirstLottery = () => {
 
   /////////////////////////////////////////////////////
   const showLottery = useCallback(async () => {
-    const lottery = await Lottery.methods.showLottery().call();
-    setLottery(lottery);
+    const _lottery = await Lottery.methods.showLottery().call();
+    setLottery(_lottery);
+  }, [Lottery.methods]);
+
+  const showAllLottery = useCallback(async () => {
+    const _allLottery = await Lottery.methods.showAllLottery().call();
+    setAllLottery(_allLottery);
   }, [Lottery.methods]);
 
   /////////////////////////////////////////////////////
   const handleShowResult = async () => {
     const _result = randomNumber(100, 999);
-    const keep = await Lottery.methods.keepResult(_result).call();
-    console.log("KEEP ", keep);
+    await Lottery.methods.keepResult(_result).call();
     setResult(_result);
     getAllResult();
   };
 
   const getAllResult = useCallback(async () => {
     const _allResult = await Lottery.methods.getAllResult().call();
-    // console.log("result: ", _allResult);
     setAllResult(_allResult);
   }, [Lottery.methods]);
 
@@ -66,26 +71,23 @@ const FirstLottery = () => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
-  // const keepWinDate = useCallback(async () => {
-  //   // let date = new Date().getTime();
-  //   // let dateInUnixTimestamp = date / 1000;
-  //   const date = await Lottery.methods.keepWinDate().call();
-  //   console.log("WIN ", date);
-  // }, [Lottery.methods]);
-
-  // const getWinDate = useCallback(async () => {
-  //   let dateInUnixTimestamp = await Lottery.methods.getWinDate().call();
-  //   // let date = new Date(dateInUnixTimestamp * 1000);
-  //   console.log("DATE: ", dateInUnixTimestamp);
-  //   // setDate(date);
-  // }, [Lottery.methods]);
+  ////////////////////////////////////////
+  const handleCheckResult = useCallback(async () => {
+    const _isWin = await Lottery.methods.checkResult(result).call();
+    if (_isWin) {
+      setIsWin("Congratulations!");
+    } else {
+      setIsWin("Try again");
+    }
+  }, [Lottery.methods]);
 
   useEffect(() => {
     getMyBalance();
     getTotalReward();
     showLottery();
     getAllResult();
-  }, [getMyBalance, getTotalReward, showLottery, getAllResult]);
+    showAllLottery();
+  }, [getMyBalance, getTotalReward, showLottery, getAllResult, showAllLottery]);
 
   return (
     <>
@@ -101,13 +103,15 @@ const FirstLottery = () => {
         <br />
         <br />
         <hr />
-        <h1>Lottery Number: {lottery}</h1>
+        <h1>My Lottery Number: {lottery}</h1>
+        <h1>All Lottery Number: {allLottery}</h1>
         <hr />
         <button onClick={handleShowResult}>Announce Result</button>
         <h1>Result: {result}</h1>
         <h2>History Result: {allResult}</h2>
         <hr />
-        {/* <h1>Date: {winDate}</h1> */}
+        <button onClick={handleCheckResult}>Is Win</button>
+        <h1>IsWin: {isWin}</h1>
       </div>
     </>
   );
