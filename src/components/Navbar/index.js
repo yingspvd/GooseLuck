@@ -1,7 +1,9 @@
 /*******************************************************************************
  * Navbar component - navigation bar to different pages
  ******************************************************************************/
-
+import useAccount from "@hooks/useAccount";
+import { useCallback, useEffect, useState } from "react";
+import Web3 from "web3";
 import React from "react";
 import {
   StyledNav,
@@ -15,9 +17,19 @@ import {
   TextContainer,
 } from "./styled";
 
-const wallet = "0.321";
-
 export default function Navbar() {
+  const account = useAccount();
+  const [myWallet, setMyWallet] = useState(0);
+
+  const getMyWallet = useCallback(async () => {
+    const _balance = await web3.eth.getBalance(account);
+    setMyWallet(parseFloat(Web3.utils.fromWei(_balance.toString(), "ether")));
+  }, account);
+
+  useEffect(() => {
+    getMyWallet();
+  }, [getMyWallet]);
+
   return (
     <StyledNav>
       <ItemContainer>
@@ -35,7 +47,7 @@ export default function Navbar() {
       <ItemContainer>
         <StyledMetamask src="/MetaMask.png" />
         <TextContainer>
-          <Text>{wallet} ETH</Text>
+          <Text>{myWallet} ETH</Text>
         </TextContainer>
       </ItemContainer>
     </StyledNav>

@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import useAccount from "@hooks/useAccount";
+import { useLottery } from "@hooks/useContracts";
+import React, { useCallback, useEffect, useState } from "react";
+import Web3 from "web3";
 import Navbar from "../../components/Navbar";
 import Button from "../../components/Button";
 
@@ -26,6 +29,11 @@ import {
 } from "./styled";
 
 export default function BuyTicket() {
+  const lotteryFee = 0.001;
+  const account = useAccount();
+  const Lottery = useLottery();
+  const [totalReward, setTotalReward] = useState(0);
+
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
   const [future, setFuture] = useState("05/13/2022");
   const [amPm, setAmPm] = useState("AM");
@@ -63,6 +71,10 @@ export default function BuyTicket() {
     }, 1000);
     return () => clearTimeout(timer);
   });
+
+  useEffect(() => {
+    getTotalReward();
+  }, [getTotalReward]);
 
   const calculateTimeLeft = () => {
     // let year = new Date().getFullYear();
@@ -132,6 +144,28 @@ export default function BuyTicket() {
     }
   };
 
+  const getTotalReward = useCallback(async () => {
+    const _reward = await Lottery.methods.getReward().call();
+    setTotalReward(Web3.utils.fromWei(_reward, "ether"));
+  }, [Lottery.methods]);
+
+  const handleBuyLottery = async () => {
+    alert("Buy Ticket");
+    // if (lotteryNumber >= 100 && lotteryNumber <= 999) {
+    //   const _fee = Web3.utils.toWei(lotteryFee.toString(), "ether");
+    //   await Lottery.methods
+    //     .buyLottery(_fee, lotteryNumber)
+    //     .send({ from: account, value: _fee });
+    //   setLotteryNumber(0);
+    //   getTotalReward();
+    //   getMyBalance();
+    //   showLottery();
+    //   showAllLottery();
+    // } else {
+    //   alert("Number should have only 3 digits");
+    // }
+  };
+
   return (
     <Container>
       <Navbar />
@@ -139,7 +173,7 @@ export default function BuyTicket() {
         <Logo>
           <StyledImage src="/gooseluck.svg" />
         </Logo>
-        <RewardText>368.59 ETH</RewardText>
+        <RewardText>{totalReward} ETH</RewardText>
         <InfoYellow>IN PRIZE!</InfoYellow>
       </GreenBackground>
       <WhiteBackground>
@@ -177,11 +211,12 @@ export default function BuyTicket() {
         <InputContainer>
           <InputNumber
             placeholder="ENTER 3 DIGIT NUMBER"
-            type="text"
+            type="number"
             maxLength="3"
             // pattern="\d{4}"
             // pattern="[0-9]*"
           />
+          <button onClick={handleBuyLottery}>Buy Ticket</button>
           <Button></Button>
         </InputContainer>
       </BrownBackground>
