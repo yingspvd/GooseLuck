@@ -10,7 +10,7 @@ const FirstLottery = () => {
 
   const [myBalance, setMyBalance] = useState(0);
   const [lotteryNumber, setLotteryNumber] = useState(0);
-  const [reward, setReward] = useState(0);
+  const [totalReward, setTotalReward] = useState(0);
   const [lottery, setLottery] = useState("");
   const [allLottery, setAllLottery] = useState("");
   const [result, setResult] = useState(0);
@@ -40,12 +40,12 @@ const FirstLottery = () => {
 
   const getTotalReward = useCallback(async () => {
     const _reward = await Lottery.methods.getReward().call();
-    setReward(Web3.utils.fromWei(_reward, "ether"));
+    setTotalReward(Web3.utils.fromWei(_reward, "ether"));
   }, [Lottery.methods]);
 
   /////////////////////////////////////////////////////
   const showLottery = useCallback(async () => {
-    const _lottery = await Lottery.methods.showLottery().call();
+    const _lottery = await Lottery.methods.showLottery(account).call();
     setLottery(_lottery);
   }, [Lottery.methods]);
 
@@ -57,7 +57,8 @@ const FirstLottery = () => {
   /////////////////////////////////////////////////////
   const handleShowResult = async () => {
     const _result = randomNumber(100, 999);
-    await Lottery.methods.keepResult(_result).call();
+    const test = await Lottery.methods.keepResult(_result).call();
+    console.log("test ", test);
     setResult(_result);
     getAllResult();
   };
@@ -72,14 +73,15 @@ const FirstLottery = () => {
   };
 
   ////////////////////////////////////////
-  const handleCheckResult = useCallback(async () => {
-    const _isWin = await Lottery.methods.checkResult(result).call();
+  const handleCheckResult = async () => {
+    const _isWin = await Lottery.methods.checkResult(account, result).call();
+    console.log("win: ", _isWin);
     if (_isWin) {
       setIsWin("Congratulations!");
     } else {
       setIsWin("Try again");
     }
-  }, [Lottery.methods]);
+  };
 
   useEffect(() => {
     getMyBalance();
@@ -93,7 +95,7 @@ const FirstLottery = () => {
     <>
       <h1>My Balance: {myBalance}</h1>
       <hr />
-      <h1>Total Reward: {reward}</h1>
+      <h1>Total Reward: {totalReward}</h1>
       <div>
         <input
           type="number"
@@ -112,6 +114,7 @@ const FirstLottery = () => {
         <hr />
         <button onClick={handleCheckResult}>Is Win</button>
         <h1>IsWin: {isWin}</h1>
+        {/* <h1>Reward: {reward}</h1> */}
       </div>
     </>
   );
