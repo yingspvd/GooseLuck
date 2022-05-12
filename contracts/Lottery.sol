@@ -3,11 +3,11 @@ pragma solidity 0.8.13;
 contract Lottery { 
     address payable public owner;
     uint256 public totalReward;
-    // uint256 public winDate;
     uint256[] public resultArray;
+    uint256[] public allLottery;
     mapping(address => uint256) public accountBuy;         // amount of buy lottery
     mapping(address => uint256[]) public numberLottery;    // number of lottery
-  
+    
     constructor(){
         owner = payable(msg.sender);
         totalReward = 0;
@@ -17,6 +17,7 @@ contract Lottery {
         require(msg.value == fee && fee > 0);
         accountBuy[msg.sender] += fee;
         numberLottery[msg.sender].push(number);
+        allLottery.push(number);
         totalReward += fee;
     }
 
@@ -28,23 +29,28 @@ contract Lottery {
         return numberLottery[msg.sender];
     }
 
-    function keepResult(uint256 result) public returns(uint256[] memory){
+    function showAllLottery() public view returns (uint256[] memory){
+        return allLottery;
+    }
+
+    function keepResult(uint256 result) public {
         resultArray.push(result);
-        return resultArray;
     }
 
     function getAllResult() public view returns(uint256[] memory){
         return resultArray;
     }
 
-    // function keepWinDate() public returns(uint256){
-    //     winDate = block.timestamp;
-    //     return winDate;
-    // }
-
-    // function getWinDate() public view returns (uint256) {
-    //     return winDate;
-    // }
-
+    function checkResult(uint256 number) public view returns(bool flag){
+        require(numberLottery[msg.sender].length > 0);
+        for (uint256 i = 0; i <= numberLottery[msg.sender].length; i++) {
+         if(numberLottery[msg.sender][i] == number){
+             return true;
+         }   
+         else{
+             return false;
+         }
+        }
+    }
 
 }
