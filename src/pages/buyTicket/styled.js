@@ -10,6 +10,7 @@ export const Container = styled.div`
 export const GreenBackground = styled.div`
   width: 100%;
   height: 45%;
+  margin-top: 30px;
   background: #074635;
   overflow: hidden;
   display: flex;
