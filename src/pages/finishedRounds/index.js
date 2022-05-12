@@ -17,6 +17,7 @@ import {
   WinningBox,
   WinningNum,
   Line,
+  PastRoundContainer,
   PastRound,
 } from "./styled";
 
@@ -59,6 +60,36 @@ const roundArray = [
     num: "752",
     date: "Aprill 15, 2022, 7:00 AM",
   },
+  {
+    round: "42",
+    num: "752",
+    date: "Aprill 15, 2022, 7:00 AM",
+  },
+  {
+    round: "42",
+    num: "752",
+    date: "Aprill 15, 2022, 7:00 AM",
+  },
+  {
+    round: "42",
+    num: "752",
+    date: "Aprill 15, 2022, 7:00 AM",
+  },
+  {
+    round: "42",
+    num: "752",
+    date: "Aprill 15, 2022, 7:00 AM",
+  },
+  {
+    round: "42",
+    num: "752",
+    date: "Aprill 15, 2022, 7:00 AM",
+  },
+  {
+    round: "42",
+    num: "752",
+    date: "Aprill 15, 2022, 7:00 AM",
+  },
 ];
 
 export default function finishedRounds() {
@@ -94,15 +125,16 @@ export default function finishedRounds() {
               </WinningBox>
             </WinningContainer>
             <Line />
-            <PastRound>
-              <Text>{roundArray.round}</Text>
-              {roundArray.map((detail, key) => (
-                <div>
-                  <Text>{detail.round[key]}</Text>
-                  <Text>{detail.num[key]}</Text>
-                </div>
+            <PastRoundContainer>
+              {roundArray.map((detail) => (
+                <PastRound>
+                  <Text>Round {detail.round}</Text>
+                  <Text>Winning Number</Text>
+                  <Text style={{ color: "#39B090" }}>{detail.num}</Text>
+                  <Text>{detail.date}</Text>
+                </PastRound>
               ))}
-            </PastRound>
+            </PastRoundContainer>
           </LatestRound>
         </Board>
       </GreenBackground>

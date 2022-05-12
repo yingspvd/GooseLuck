@@ -5,6 +5,7 @@ export const StyledNav = styled.div`
   width: 100%;
   height: 50px;
   background: #074635;
+  position: fixed;
   z-index: 100;
   overflow: hidden;
 `;
