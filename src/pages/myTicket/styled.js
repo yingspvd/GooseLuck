@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
-
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100vh;
   overflow: auto;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 `;
 
 export const GreenBackground = styled.div`
