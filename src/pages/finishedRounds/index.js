@@ -99,16 +99,19 @@ export default function FinishedRounds() {
   const account = useAccount();
   const Lottery = useLottery();
 
-  const [resultHistory, setHisResult] = useState("");
-  const [dateHistory, setHisDate] = useState("");
+  const [resultHistory, setHisResult] = useState([123, 111]);
+  const [dateHistory, setHisDate] = useState(["www", "ww"]);
+
+  const lotteryTemp = [111, 222, 333];
+  const dateTemp = ["111", "222", "333"];
 
   const getHistoryResult = useCallback(async () => {
     const _hisResult = await Lottery.methods.getHistoryResult().call();
     const _hisDate = await Lottery.methods.getHistoryDate().call();
-    console.log("RESULT", _hisResult);
-    console.log("DATE", _hisDate);
+
+    console.log(_hisResult);
     setHisResult(_hisResult);
-    setHisDate(_hisResult);
+    setHisDate(_hisDate);
   }, [Lottery.methods]);
 
   useEffect(() => {
@@ -130,32 +133,37 @@ export default function FinishedRounds() {
                 <Text style={{ fontSize: "30px" }}>Round</Text>
                 <Circle>
                   <Text style={{ fontSize: "30px", fontWeight: "700" }}>
-                    {round}
+                    {resultHistory.length}
                   </Text>
                 </Circle>
               </Round>
               <Drawn>
                 <Text style={{ fontSize: "20px", opacity: "0.5" }}>
-                  Drawn {date}
+                  Drawn {dateHistory[dateHistory.length - 1]}
                 </Text>
               </Drawn>
             </RoundContainer>
             <WinningContainer>
               <Text style={{ fontSize: "35px" }}>Winning Number</Text>
               <WinningBox>
-                <WinningNum>{latestNum}</WinningNum>
+                <WinningNum>
+                  {resultHistory[resultHistory.length - 1]}
+                </WinningNum>
               </WinningBox>
             </WinningContainer>
             <Line />
             <PastRoundContainer>
-              {roundArray.map((detail,key) => (
-                <PastRound key={detail.num}>
-                  <Text>Round {detail.round}</Text>
-                  <Text>Winning Number</Text>
-                  <Text style={{ color: "#39B090" }}>{detail.num}</Text>
-                  <Text>{detail.date}</Text>
-                </PastRound>
-              ))}
+              {resultHistory
+                .slice(0, -1)
+                .reverse()
+                .map((detail, key) => (
+                  <PastRound key={detail.key}>
+                    <Text>Round {resultHistory.length - key - 1}</Text>
+                    <Text>Winning Number</Text>
+                    <Text style={{ color: "#39B090" }}>{detail}</Text>
+                    <Text>{dateHistory.slice(0, -1).reverse()[key]}</Text>
+                  </PastRound>
+                ))}
             </PastRoundContainer>
           </LatestRound>
         </Board>
