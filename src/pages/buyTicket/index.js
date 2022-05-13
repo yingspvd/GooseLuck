@@ -33,12 +33,13 @@ export default function BuyTicket() {
   const account = useAccount();
   const Lottery = useLottery();
   const [totalReward, setTotalReward] = useState(0);
+  const [ticketNumber, setTicketNumber] = useState(0);
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
-  const [future, setFuture] = useState("05/13/2022");
+  const [future, setFuture] = useState("05/14/2022");
   const [amPm, setAmPm] = useState("AM");
   const [futureDate, setFutureDate] = useState("Fri");
-  const [futureDay, setFutureDay] = useState("13");
+  const [futureDay, setFutureDay] = useState("14");
   const [futureMonth, setFutureMonth] = useState("May");
   const [futureYear, setFutureYear] = useState("2022");
   const [futureHours, setFutureHours] = useState("00");
@@ -74,7 +75,13 @@ export default function BuyTicket() {
 
   useEffect(() => {
     getTotalReward();
+    dateCal();
   }, [getTotalReward]);
+
+  const dateCal = () => {
+    var date = new Date();
+    const formatted = date.toString().split(" ");
+  };
 
   const calculateTimeLeft = () => {
     // let year = new Date().getFullYear();
@@ -149,21 +156,17 @@ export default function BuyTicket() {
     setTotalReward(Web3.utils.fromWei(_reward, "ether"));
   }, [Lottery.methods]);
 
-  const handleBuyLottery = async () => {
-    alert("Buy Ticket");
-    // if (lotteryNumber >= 100 && lotteryNumber <= 999) {
-    //   const _fee = Web3.utils.toWei(lotteryFee.toString(), "ether");
-    //   await Lottery.methods
-    //     .buyLottery(_fee, lotteryNumber)
-    //     .send({ from: account, value: _fee });
-    //   setLotteryNumber(0);
-    //   getTotalReward();
-    //   getMyBalance();
-    //   showLottery();
-    //   showAllLottery();
-    // } else {
-    //   alert("Number should have only 3 digits");
-    // }
+  const handleBuyTicket = async () => {
+    if (ticketNumber >= 100 && ticketNumber <= 999) {
+      const _fee = Web3.utils.toWei(lotteryFee.toString(), "ether");
+      await Lottery.methods
+        .buyLottery(_fee, ticketNumber)
+        .send({ from: account, value: _fee });
+      setTicketNumber("");
+      getTotalReward();
+    } else {
+      alert("Number should have only 3 digits");
+    }
   };
 
   return (
@@ -213,10 +216,11 @@ export default function BuyTicket() {
             placeholder="ENTER 3 DIGIT NUMBER"
             type="number"
             maxLength="3"
+            onChange={(e) => setTicketNumber(e.target.value)}
             // pattern="\d{4}"
             // pattern="[0-9]*"
           />
-          <Button buyLottery={handleBuyLottery}></Button>
+          <Button buyLottery={handleBuyTicket}></Button>
         </InputContainer>
       </BrownBackground>
     </Container>

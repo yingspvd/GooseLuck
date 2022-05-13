@@ -13,6 +13,7 @@ contract Lottery {
         // mapping(address => uint256) public amountTicket; 
         //     mapping(address =>   mapping(uint => uint256)) public somchai; 
         //     [address][round][accountBuy[address]]
+        
     constructor(){
         owner = payable(msg.sender);
         totalReward = 0;
@@ -39,11 +40,14 @@ contract Lottery {
         return allLottery;
     }
 
-    function keepResult(uint256 result, string memory date) public returns(string[] memory) {
+    function keepResult(uint256 result) public  {
         resultHistory.push(result);
-        dateArray.push(date);
-        return dateArray;
     }
+
+     function keepDateAnnounce( string memory date) public {
+        dateArray.push(date);
+    }
+
 
 
     function getAllResult() public view returns(uint256[] memory){
