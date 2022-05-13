@@ -1,9 +1,7 @@
 /*******************************************************************************
  * Navbar component - navigation bar to different pages
  ******************************************************************************/
-import useAccount from "@hooks/useAccount";
-import { useCallback, useEffect, useState } from "react";
-import Web3 from "web3";
+
 import React from "react";
 import { useRouter } from 'next/router'
 import {
@@ -18,19 +16,8 @@ import {
   TextContainer,
 } from "./styled";
 
-export default function Navbar() {
+export default function Navbar({ ...props }) {
   const router = useRouter()
-  const account = useAccount();
-  const [myWallet, setMyWallet] = useState(0);
-
-  const getMyWallet = useCallback(async () => {
-    const _balance = await web3.eth.getBalance(account);
-    setMyWallet(parseFloat(Web3.utils.fromWei(_balance.toString(), "ether")));
-  }, [account]);
-
-  useEffect(() => {
-    getMyWallet();
-  }, [getMyWallet]);
 
   return (
     <StyledNav>
@@ -47,7 +34,7 @@ export default function Navbar() {
       <ItemContainer>
         <StyledMetamask src="/MetaMask.png" />
         <TextContainer>
-          <Text>{myWallet} ETH</Text>
+          <Text>{props.myWallet} ETH</Text>
         </TextContainer>
       </ItemContainer>
     </StyledNav>
