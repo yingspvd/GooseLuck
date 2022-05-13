@@ -86,6 +86,12 @@ const FirstLottery = () => {
     }
   };
 
+  ////////////////////////////
+  // const keepDateAnnounce = useCallback(async () => {
+  //   const _date = futureMonth + " " + futureDay + ", " + futureYear;
+  //   await Lottery.methods.keepDateAnnounce(_date).send({ from: account });
+  // }, [Lottery.methods, account, futureDay, futureMonth, futureYear]);
+
   useEffect(() => {
     getMyBalance();
     getTotalReward();
