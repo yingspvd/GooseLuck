@@ -127,7 +127,7 @@ export default function finishedRounds() {
             <Line />
             <PastRoundContainer>
               {roundArray.map((detail) => (
-                <PastRound>
+                <PastRound key={detail.num}>
                   <Text>Round {detail.round}</Text>
                   <Text>Winning Number</Text>
                   <Text style={{ color: "#39B090" }}>{detail.num}</Text>

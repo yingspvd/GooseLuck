@@ -20,7 +20,7 @@ const FirstLottery = () => {
   const getMyBalance = useCallback(async () => {
     const _balance = await web3.eth.getBalance(account);
     setMyBalance(parseFloat(Web3.utils.fromWei(_balance.toString(), "ether")));
-  }, account);
+  }, [account]);
 
   const handleBuyLottery = async () => {
     if (lotteryNumber >= 100 && lotteryNumber <= 999) {
@@ -47,7 +47,7 @@ const FirstLottery = () => {
   const showLottery = useCallback(async () => {
     const _lottery = await Lottery.methods.showLottery(account).call();
     setLottery(_lottery);
-  }, [Lottery.methods]);
+  }, [Lottery.methods, account]);
 
   const showAllLottery = useCallback(async () => {
     const _allLottery = await Lottery.methods.showAllLottery().call();
@@ -57,7 +57,10 @@ const FirstLottery = () => {
   /////////////////////////////////////////////////////
   const handleShowResult = async () => {
     const _result = randomNumber(100, 999);
-    const test = await Lottery.methods.keepResult(_result).call();
+    const _date = "13 May 2022";
+    const test = await Lottery.methods
+      .keepResult(_result, _date)
+      .send({ from: account });
     console.log("test ", test);
     setResult(_result);
     getAllResult();

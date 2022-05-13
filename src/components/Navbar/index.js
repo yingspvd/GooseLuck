@@ -24,7 +24,7 @@ export default function Navbar() {
   const getMyWallet = useCallback(async () => {
     const _balance = await web3.eth.getBalance(account);
     setMyWallet(parseFloat(Web3.utils.fromWei(_balance.toString(), "ether")));
-  }, account);
+  }, [account]);
 
   useEffect(() => {
     getMyWallet();

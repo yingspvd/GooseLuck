@@ -216,8 +216,7 @@ export default function BuyTicket() {
             // pattern="\d{4}"
             // pattern="[0-9]*"
           />
-          <button onClick={handleBuyLottery}>Buy Ticket</button>
-          <Button></Button>
+          <Button buyLottery={handleBuyLottery}></Button>
         </InputContainer>
       </BrownBackground>
     </Container>
