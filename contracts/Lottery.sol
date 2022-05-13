@@ -5,7 +5,8 @@ contract Lottery {
     uint256 public totalReward;
     uint256 public reward;          // Reward in that round
     uint256[] public resultHistory;
-    string[] public dateArray;
+    string[] public dateAnnounce;
+    string[] public nowDate;
     uint256[] public allLottery;
     mapping(address => uint256) public accountBuy;         // amount of buy lottery
     mapping(address => uint256[]) public numberLottery;    // number of lottery
@@ -13,7 +14,7 @@ contract Lottery {
         // mapping(address => uint256) public amountTicket; 
         //     mapping(address =>   mapping(uint => uint256)) public somchai; 
         //     [address][round][accountBuy[address]]
-        
+
     constructor(){
         owner = payable(msg.sender);
         totalReward = 0;
@@ -32,6 +33,11 @@ contract Lottery {
         return totalReward;
     }
 
+    function getNumTicket() public view returns(uint256){
+        return allLottery.length;
+    }
+
+// notuuse
     function showLottery(address account) public view returns (uint256[] memory){
         return numberLottery[account];
     }
@@ -40,15 +46,24 @@ contract Lottery {
         return allLottery;
     }
 
-    function keepResult(uint256 result) public  {
+    function keepResult(uint256 result, string memory anounce, string[] memory _nowDate) public  {
         resultHistory.push(result);
+        dateAnnounce.push(anounce);
+        nowDate = _nowDate;
     }
 
-     function keepDateAnnounce( string memory date) public {
-        dateArray.push(date);
+    //  function keepDateAnnounce( string memory anounce, string[] memory _nowDate) public {
+    //     dateAnnounce.push(anounce);
+    //     nowDate = _nowDate;
+    // }
+
+    function showDateAnnounce() public view returns(string[] memory) {
+        return dateAnnounce;
     }
 
-
+    function showDateNow() public view returns(string[] memory) {
+        return nowDate;
+    }
 
     function getAllResult() public view returns(uint256[] memory){
         return resultHistory;
