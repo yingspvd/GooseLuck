@@ -32,6 +32,7 @@ export default function BuyTicket() {
   const lotteryFee = 0.001;
   const account = useAccount();
   const Lottery = useLottery();
+  const [myWallet, setMyWallet] = useState(0);
   const [totalReward, setTotalReward] = useState(0);
   const [ticketNumber, setTicketNumber] = useState(0);
 
@@ -75,8 +76,13 @@ export default function BuyTicket() {
 
   useEffect(() => {
     getTotalReward();
-    dateCal();
-  }, [getTotalReward]);
+    getMyWallet();
+  }, [getTotalReward, getMyWallet]);
+
+  const getMyWallet = useCallback(async () => {
+    const _balance = await web3.eth.getBalance(account);
+    setMyWallet(parseFloat(Web3.utils.fromWei(_balance.toString(), "ether")));
+  }, [account]);
 
   const dateCal = () => {
     var date = new Date();
@@ -171,7 +177,7 @@ export default function BuyTicket() {
 
   return (
     <Container>
-      <Navbar />
+      <Navbar myWallet={myWallet} />
       <GreenBackground>
         <Logo>
           <StyledImage src="/gooseluck.svg" />
