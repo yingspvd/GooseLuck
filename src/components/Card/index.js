@@ -1,42 +1,75 @@
 import React from "react";
 import Button from "../Button";
-import { LotteryCard, BoldText, Item, Text } from "./styled";
+import { CardContainer, LotteryCard, BoldText, Number, Item, Text, StyleButton, Announce } from "./styled";
 
-export default function Card() {
+export default function Card({ ...props }) {
   const round = "49";
   const date = "Draw: May 15, 2022, 7:00 AM";
   const num = "896";
   return (
-    <LotteryCard>
-      <Item>
-        <BoldText style={{ marginTop: "25px" }}>Round {round}</BoldText>
-        <Text style={{ marginTop: "8px" }}>{date}</Text>
-        <BoldText
-          style={{
-            fontSize: 40,
-            marginTop: "25px",
-            marginBottom: "25px",
-            marginLeft: "15px",
-            letterSpacing: "15px",
-          }}
-        >
-          {num}
-        </BoldText>
-        <button
-          style={{
-            width: "100px",
-            height: "35px",
-            borderRadius: "10px",
-            background: "#eec829",
-            border: "none",
-            cursor: "pointer",
-            fontWeight: 600,
-            letterSpacing: "3px",
-          }}
-        >
-          Check
-        </button>
-      </Item>
-    </LotteryCard>
+    <CardContainer>
+      {/* <LotteryCard>
+        <Item>
+          <BoldText>Round {props.round}</BoldText>
+          <Text style={{ marginTop: "8px" }}>{props.date}</Text>
+        </Item>
+        <Item>
+          <Number>{props.num}</Number>
+        </Item>
+        <Item>
+        <StyleButton>Check</StyleButton>
+        </Item>
+      </LotteryCard> */}
+
+
+      {props.status == "progress" ?
+        <LotteryCard>
+          <Item>
+            <BoldText>Round {props.round}</BoldText>
+            <Text style={{ marginTop: "8px" }}>{props.date}</Text>
+          </Item>
+          <Item>
+            <Number>{props.num}</Number>
+          </Item>
+          <Item>
+          <StyleButton>Check</StyleButton>
+          </Item>
+        </LotteryCard>
+        : props.status == "win" ?
+        <LotteryCard style={{background: "#8C4F1E", opacity: "0.5"}}>
+          <Item>
+            <BoldText>Round {props.round}</BoldText>
+            <Text style={{ marginTop: "8px" }}>{props.date}</Text>
+          </Item>
+          <Item>
+            <Number>{props.num}</Number>
+          </Item>
+          <Item>
+            <StyleButton>Check</StyleButton>
+          </Item>
+          <Item>
+            <Announce>Congratulation!!!</Announce>
+          </Item>
+        </LotteryCard>
+        : 
+        <LotteryCard style={{background: "#8C4F1E", opacity: "0.5"}}>
+          <Item>
+            <BoldText>Round {props.round}</BoldText>
+            <Text style={{ marginTop: "8px" }}>{props.date}</Text>
+          </Item>
+          <Item>
+            <Number>{props.num}</Number>
+          </Item>
+          <Item>
+            <StyleButton>Check</StyleButton>
+          </Item>
+          <Item>
+            <Announce style={{background: "#CDAD9E"}}>Try again</Announce>
+          </Item>
+        </LotteryCard>
+      }
+
+    </CardContainer>
+    
   );
 }

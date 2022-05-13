@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const StyledNav = styled.div`
   display: flex;
+  justify-content: space-between;
   width: 100%;
   height: 50px;
   background: #074635;
@@ -14,7 +15,6 @@ export const StyledNav = styled.div`
 `;
 
 export const ItemContainer = styled.div`
-  width: 10%;
   position: relative;
   margin-left: 1em;
   margin-right: 1em;
@@ -30,6 +30,7 @@ export const StyledImage = styled.img`
 `;
 
 export const StyledLink = styled.a`
+  cursor: pointer;
   color: #ffffff;
   text-decoration: none;
   &: hover {
@@ -39,17 +40,21 @@ export const StyledLink = styled.a`
 
 export const Menu = styled.div`
   display: flex;
-  width: 80%;
+  width: 40%;
   justify-content: center;
   align-items: center;
 `;
 
 export const MenuItem = styled.div`
+  width: 100%;
+  display:flex;
+  justify-content: space-evenly;
   font-size: 15px;
   letter-spacing: 2px;
 `;
 
 export const StyledMetamask = styled.img`
+  cursor: context-menu;
   margin-top: 5px;
   margin-bottom: 5px;
   margin-right: 20px;
@@ -59,6 +64,7 @@ export const TextContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: context-menu;
 `;
 
 export const Text = styled.div`
