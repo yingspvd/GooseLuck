@@ -68,7 +68,7 @@ export default function Admin() {
           <StyledImage src="/egg.png" />
         </TitleContainer>
         <RandomBox>
-          <RandomText>{result}</RandomText>
+          <RandomText default="000">{result}</RandomText>
         </RandomBox>
         <StyledButton
           onClick={handleRandomNum}
