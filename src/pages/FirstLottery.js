@@ -16,6 +16,7 @@ const FirstLottery = () => {
   const [result, setResult] = useState(0);
   const [allResult, setAllResult] = useState("");
   const [isWin, setIsWin] = useState("");
+  const [dateNow, setDateNow] = useState("");
 
   const getMyBalance = useCallback(async () => {
     const _balance = await web3.eth.getBalance(account);
@@ -57,12 +58,16 @@ const FirstLottery = () => {
   /////////////////////////////////////////////////////
   const handleShowResult = async () => {
     const _result = randomNumber(100, 999);
-    const _date = "13 May 2022";
-    const test = await Lottery.methods
-      .keepResult(_result, _date)
+    const _date = new Date();
+    const dateString = _date.toString().split(" ");
+    const formatted =
+      dateString[1] + " " + dateString[2] + ", " + dateString[3];
+
+    await Lottery.methods
+      .keepResult(_result, formatted, dateString)
       .send({ from: account });
-    console.log("test ", test);
     setResult(_result);
+    showDate();
     getAllResult();
   };
 
@@ -87,10 +92,23 @@ const FirstLottery = () => {
   };
 
   ////////////////////////////
-  // const keepDateAnnounce = useCallback(async () => {
-  //   const _date = futureMonth + " " + futureDay + ", " + futureYear;
-  //   await Lottery.methods.keepDateAnnounce(_date).send({ from: account });
-  // }, [Lottery.methods, account, futureDay, futureMonth, futureYear]);
+  const keepDateAnnounce = useCallback(async () => {
+    const date = new Date();
+
+    const dateString = date.toString().split(" ");
+    const formatted =
+      dateString[1] + " " + dateString[2] + ", " + dateString[3];
+    await Lottery.methods
+      .keepDateAnnounce(formatted, dateString)
+      .send({ from: account });
+    showDate();
+  }, [Lottery.methods, account, showDate]);
+
+  const showDate = useCallback(async () => {
+    const date = await Lottery.methods.showDateAnnounce().call();
+    setDateNow(date);
+    console.log(date);
+  }, [Lottery.methods]);
 
   useEffect(() => {
     getMyBalance();
@@ -124,6 +142,8 @@ const FirstLottery = () => {
         <button onClick={handleCheckResult}>Is Win</button>
         <h1>IsWin: {isWin}</h1>
         {/* <h1>Reward: {reward}</h1> */}
+        <hr />
+        <h1>Date Now: {dateNow}</h1>
       </div>
     </>
   );
