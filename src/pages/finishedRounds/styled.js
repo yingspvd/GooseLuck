@@ -6,6 +6,9 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 `;
 
 export const GreenBackground = styled.div`
@@ -122,7 +125,7 @@ export const Line = styled.div`
 `;
 
 export const PastRoundContainer = styled.div`
-  width: 100%
+  width: 100%;
 `;
 export const PastRound = styled.div`
   margin-bottom: 15px;
