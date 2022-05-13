@@ -13,7 +13,7 @@ export const Container = styled.div`
 
 export const GreenBackground = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   background: #074635;
   overflow: hidden;
   display: flex;
@@ -43,7 +43,7 @@ export const StyledImage = styled.img`
 
 export const Board = styled.div`
   width: 80%;
-  height: 100%;
+  min-height: 74vh;
   background: #eee5de;
   margin-top: 60px;
 `;

@@ -126,7 +126,7 @@ export default function finishedRounds() {
             </WinningContainer>
             <Line />
             <PastRoundContainer>
-              {roundArray.map((detail) => (
+              {roundArray.map((detail,key) => (
                 <PastRound key={detail.num}>
                   <Text>Round {detail.round}</Text>
                   <Text>Winning Number</Text>
