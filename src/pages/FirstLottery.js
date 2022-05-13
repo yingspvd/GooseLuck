@@ -72,7 +72,7 @@ const FirstLottery = () => {
   };
 
   const getAllResult = useCallback(async () => {
-    const _allResult = await Lottery.methods.getAllResult().call();
+    const _allResult = await Lottery.methods.getHistoryResult().call();
     setAllResult(_allResult);
   }, [Lottery.methods]);
 

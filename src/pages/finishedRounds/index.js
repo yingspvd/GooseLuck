@@ -1,4 +1,7 @@
-import React from "react";
+import useAccount from "@hooks/useAccount";
+import { useLottery } from "@hooks/useContracts";
+import React, { useCallback, useEffect, useState } from "react";
+import Web3 from "web3";
 import Navbar from "../../components/Navbar";
 import {
   Container,
@@ -92,7 +95,26 @@ const roundArray = [
   },
 ];
 
-export default function finishedRounds() {
+export default function FinishedRounds() {
+  const account = useAccount();
+  const Lottery = useLottery();
+
+  const [resultHistory, setHisResult] = useState("");
+  const [dateHistory, setHisDate] = useState("");
+
+  const getHistoryResult = useCallback(async () => {
+    const _hisResult = await Lottery.methods.getHistoryResult().call();
+    const _hisDate = await Lottery.methods.getHistoryDate().call();
+    console.log("RESULT", _hisResult);
+    console.log("DATE", _hisDate);
+    setHisResult(_hisResult);
+    setHisDate(_hisResult);
+  }, [Lottery.methods]);
+
+  useEffect(() => {
+    getHistoryResult();
+  }, [getHistoryResult]);
+
   return (
     <Container>
       <Navbar />
