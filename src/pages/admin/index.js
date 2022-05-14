@@ -41,9 +41,10 @@ export default function Admin() {
   const handleRandomNum = async () => {
     const _result = randomNumber(100, 999);
     const _date = new Date();
-    const dateString = _date.toString().split(" ");
+    const dateString = _date.toString();
+    const dateArray = _date.toString().split(" ");
     const announceDate =
-      dateString[1] + " " + dateString[2] + ", " + dateString[3];
+      dateArray[1] + " " + dateArray[2] + ", " + dateArray[3];
 
     await Lottery.methods
       .keepResult(_result, announceDate, dateString)
