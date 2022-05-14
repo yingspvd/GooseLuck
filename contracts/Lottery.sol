@@ -3,7 +3,7 @@ pragma solidity 0.8.13;
 contract Lottery { 
     address payable public owner;
     uint256 public totalReward;
-    uint256 public reward;          // Reward in that round
+    uint256[] public reward;          // Reward in that round
     uint256[] public resultHistory;
     string[] public dateHistory;
     string public nowDate;
@@ -22,7 +22,6 @@ contract Lottery {
     constructor(){
         owner = payable(msg.sender);
         totalReward = 0;
-        reward = 0;
         round = 0;
     }
 
@@ -39,14 +38,6 @@ contract Lottery {
         return totalReward;
     }
 
-    function getMyNewLottery(address account) public returns (uint256[][] memory){
-        for (uint256 i = 0; i <= round; i++) {
-            lotteryTemp.push(myNewLottery[account][i]);
-        }
-        return lotteryTemp;
-    }
-
-
 // ******************** History **************************
     function getHistoryResult() public view returns(uint256[] memory){
         return resultHistory;
@@ -57,10 +48,17 @@ contract Lottery {
     }
 
   // ******************** My Ticket **************************  
+     function getMyLottery(address account) public returns (uint256[][] memory){
+        for (uint256 i = 0; i <= round; i++) {
+            lotteryTemp.push(myNewLottery[account][i]);
+        }
+        return lotteryTemp;
+    }
+
     function checkResult(uint256 _number, uint256 _round) public payable returns(string memory){
         if(_round - 1 < round){
             if(_number == resultHistory[round]){
-                payable( msg.sender).transfer(reward);
+                payable( msg.sender).transfer(reward[_round]);
                 return "Congratulations!";
             }
             else{
@@ -72,6 +70,10 @@ contract Lottery {
         }
     }
 
+    // function check() public payable {
+    //     uint256 num = 0
+    //     payable( msg.sender).transfer();
+    // }
 // ******************** Admin **************************
     function getNumTicket() public view returns(uint256){
         return allLottery.length;
@@ -92,8 +94,10 @@ contract Lottery {
     }
 
     function keepResult(uint256 result, string memory anounce, string memory _nowDate) public {
-        // uint256 count = 0;
+        uint256 _reward = 0;
         uint256 count = 0;
+        resultHistory.push(result);
+   
         for (uint256 i = 0; i < allLottery.length; i++) {
             if(allLottery[i] == resultHistory[round]){
                 count += 1;
@@ -101,16 +105,23 @@ contract Lottery {
         }
 
         if(count == 0){
-            reward = 0;
+            _reward = 0;
         }
         else{
-            reward = totalReward / count;
+            _reward = totalReward / count;
         }
-        resultHistory.push(result);
+        reward.push(_reward);
+        
         dateHistory.push(anounce);
         nowDate = _nowDate;
+
+        round += 1;
+        totalReward = 0;
+        delete allLottery;
+    
     }
 
+  
 /////////////////// notuuse
     function showAllLottery() public view returns (uint256[] memory){
         return allLottery;
