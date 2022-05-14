@@ -95,8 +95,8 @@ export default function BuyTicket() {
     if (_date.length == 0) {
       const _dateNow = new Date();
       console.log(_dateNow);
-      console.log(typeof(_dateNow));
-      const addMinutes = new Date(_dateNow.getTime() + 1*60000);
+      console.log(typeof _dateNow);
+      const addMinutes = new Date(_dateNow.getTime() + 1 * 60000);
       // _dateNow.setDate(_dateNow.getDate() + 15);
       setFuture(addMinutes);
       const dateArray = addMinutes.toString().split(" ");
@@ -104,7 +104,7 @@ export default function BuyTicket() {
       // console.log("0: ", dateArray);
     } else {
       const dateObj = new Date(_date);
-      const addMinutes = new Date(dateObj.getTime() + 1*60000);
+      const addMinutes = new Date(dateObj.getTime() + 1 * 60000);
       setFuture(addMinutes);
       const dateArray = addMinutes.toString().split(" ");
       setDateNow(dateArray);
@@ -148,7 +148,7 @@ export default function BuyTicket() {
   //   }
   // };
 
-  const handleBuyNewTicket = async () => {
+  const handleBuyTicket = async () => {
     if (ticketNumber >= 100 && ticketNumber <= 999) {
       const _fee = Web3.utils.toWei(lotteryFee.toString(), "ether");
       await Lottery.methods
@@ -157,21 +157,10 @@ export default function BuyTicket() {
 
       setTicketNumber("");
       getTotalReward();
-      getMyNewLottery();
     } else {
       alert("Number should have only 3 digits");
     }
   };
-
-  const getMyNewLottery = useCallback(async () => {
-    const _lottery = await Lottery.methods.getMyNewLottery(account).call();
-    console.log(_lottery);
-  }, [Lottery.methods, account]);
-
-  const getMyLottery = useCallback(async () => {
-    const _lottery = await Lottery.methods.getMyLottery(account).call();
-    console.log(_lottery);
-  }, [Lottery.methods, account]);
 
   const calculateTimeLeft = () => {
     // let year = new Date().getFullYear();
@@ -293,11 +282,11 @@ export default function BuyTicket() {
             // pattern="\d{4}"
             // pattern="[0-9]*"
           />
-          {difference > 0 
-          ? <Button buyLottery={handleBuyTicket}>buy</Button>
-          : <Button buyLottery={handleBuyTicket}>result</Button>
-          }
-          
+          {difference > 0 ? (
+            <Button buyLottery={handleBuyTicket}>buy</Button>
+          ) : (
+            <Button buyLottery={handleBuyTicket}>result</Button>
+          )}
         </InputContainer>
       </BrownBackground>
     </Container>
