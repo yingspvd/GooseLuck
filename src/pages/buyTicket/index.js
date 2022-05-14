@@ -38,7 +38,6 @@ export default function BuyTicket() {
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
   const [future, setFuture] = useState("05/14/2022");
-  const [amPm, setAmPm] = useState("AM");
   const [futureDate, setFutureDate] = useState("Fri");
   const [futureDay, setFutureDay] = useState("14");
   const [futureMonth, setFutureMonth] = useState("May");

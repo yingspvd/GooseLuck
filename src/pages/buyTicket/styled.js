@@ -154,5 +154,4 @@ export const InputNumber = styled.input`
     letter-spacing: 2px;
     text-align: center;
   }
-}
 `;
