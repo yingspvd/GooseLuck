@@ -32,7 +32,6 @@ const FirstLottery = () => {
       setLotteryNumber(0);
       getTotalReward();
       getMyBalance();
-      showLottery();
       showAllLottery();
     } else {
       alert("Number should have only 3 digits");
@@ -45,10 +44,6 @@ const FirstLottery = () => {
   }, [Lottery.methods]);
 
   /////////////////////////////////////////////////////
-  const showLottery = useCallback(async () => {
-    const _lottery = await Lottery.methods.showLottery(account).call();
-    setLottery(_lottery);
-  }, [Lottery.methods, account]);
 
   const showAllLottery = useCallback(async () => {
     const _allLottery = await Lottery.methods.showAllLottery().call();
@@ -110,13 +105,18 @@ const FirstLottery = () => {
     console.log(date);
   }, [Lottery.methods]);
 
+  const checkResult = useCallback(async () => {
+    const date = await Lottery.methods.checkResult().send({from:account});
+    setDateNow(date);
+    console.log(date);
+  }, [Lottery.methods]);
+
   useEffect(() => {
     getMyBalance();
     getTotalReward();
-    showLottery();
     getAllResult();
     showAllLottery();
-  }, [getMyBalance, getTotalReward, showLottery, getAllResult, showAllLottery]);
+  }, [getMyBalance, getTotalReward, getAllResult, showAllLottery]);
 
   return (
     <>
