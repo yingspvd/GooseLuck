@@ -47,12 +47,12 @@ export default function Admin() {
     const announceDate =
       dateArray[1] + " " + dateArray[2] + ", " + dateArray[3];
 
-    const test = await Lottery.methods
+    await Lottery.methods
       .keepResult(_result, announceDate, dateString)
       .send({ from: account });
     setResult(_result);
-    getReward();
-    console.log(test);
+    getTotalReward();
+    getNumTicket();
   };
 
   const randomNumber = (min, max) => {
