@@ -109,7 +109,7 @@ const FirstLottery = () => {
     const date = await Lottery.methods.checkResult().send({from:account});
     setDateNow(date);
     console.log(date);
-  }, [Lottery.methods]);
+  }, [Lottery.methods, account]);
 
   useEffect(() => {
     getMyBalance();

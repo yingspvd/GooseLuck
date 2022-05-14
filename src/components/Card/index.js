@@ -1,3 +1,6 @@
+import useAccount from "@hooks/useAccount";
+import { useLottery } from "@hooks/useContracts";
+import Web3 from "web3";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   CardContainer,
@@ -11,12 +14,28 @@ import {
 } from "./styled";
 
 export default function Card({ ...props }) {
-  const round = "49";
-  const date = "Draw: May 15, 2022, 7:00 AM";
-  const num = "896";
+  const account = useAccount();
+  const Lottery = useLottery();
+
   const [myStatus, setMyStatus] = useState();
 
-  const getMyStatus = useCallback(async (num) => {
+  const checkResult = useCallback(
+    async (round, num) => {
+      console.log("round ", round);
+      console.log("num ", num);
+      const status = await Lottery.methods.checkResult(num, round - 1).call();
+      if (status == true) {
+        setMyStatus(true);
+      } else if (status == false) {
+        setMyStatus(false);
+      } else {
+        alert(status);
+      }
+    },
+    [Lottery.methods]
+  );
+
+  const getMyStatus = (num) => {
     if (num == 859) {
       setMyStatus(true);
     } else {
@@ -24,7 +43,7 @@ export default function Card({ ...props }) {
     }
 
     console.log("status", myStatus);
-  });
+  };
 
   const checkNum = (round, num) => {
     console.log("round", round);
@@ -70,7 +89,7 @@ export default function Card({ ...props }) {
             <Number>{props.num}</Number>
           </Item>
           <Item>
-            <StyleButton onClick={() => checkNum(props.round, props.num)}>
+            <StyleButton onClick={() => checkResult(props.round, props.num)}>
               Check
             </StyleButton>
           </Item>

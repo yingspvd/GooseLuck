@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import useAccount from "@hooks/useAccount";
+import { useLottery } from "@hooks/useContracts";
 import Web3 from "web3";
 import Navbar from "../../components/Navbar";
 import Card from "../../components/Card";
@@ -14,54 +15,32 @@ import {
 
 export default function MyTicket() {
   const account = useAccount();
-  const [myWallet, setMyWallet] = useState(0);
-  const round = "49";
-  const date = "Draw: May 15, 2022, 7:00 AM";
-  const num = "896";
+  const Lottery = useLottery();
 
+  const [myWallet, setMyWallet] = useState(0);
+  const [MyTicket, setMyTicket] = useState("");
+
+///////// getRound check ว่าถูกรอบมั้ย
   useEffect(() => {
     getMyWallet();
-  }, [getMyWallet]);
+    getMyTicket();
+    getRound();
+  }, [getMyWallet, getMyTicket, getRound]);
 
   const getMyWallet = useCallback(async () => {
     const _balance = await web3.eth.getBalance(account);
     setMyWallet(parseFloat(Web3.utils.fromWei(_balance.toString(), "ether")));
   }, [account]);
 
-  const ticketsArray = [
-    {
-      round: "48",
-      num: ["896", "156", "859"],
-    },
-    {
-      round: "49",
-      num: ["896", "156", "859"],
-    },
-    {
-      round: "50",
-      num: ["896", "156", "859"],
-    },
-    {
-      round: "51",
-      num: ["896", "156", "859"],
-    },
-    {
-      round: "52",
-      num: ["896", "156", "859"],
-    },
-    {
-      round: "53",
-      num: ["896", "156", "859"],
-    },
-    {
-      round: "54",
-      num: ["896", "156", "859"],
-    },
-    {
-      round: "55",
-      num: ["896", "156", "859"],
-    },
-  ];
+  const getMyTicket = useCallback(async () => {
+    const _reward = await Lottery.methods.getMyLottery(account).call();
+    setMyTicket(_reward);
+  }, [Lottery.methods, account]);
+
+  const getRound = useCallback(async () => {
+    const _round = await Lottery.methods.getRound().call();
+    console.log(_round);
+  }, [Lottery.methods]);
 
   return (
     <Container>
@@ -72,14 +51,18 @@ export default function MyTicket() {
           <StyledImage src="/nest.png" />
         </TitleContainer>
         <CardContainer>
-          {ticketsArray
-            .slice(0, -1)
-            .reverse()
-            .map((rounds, key) =>
-              rounds.num.map((number, key) => (
-                <Card round={rounds.round} num={number}/>
-              ))
-            )}
+          {MyTicket &&
+            MyTicket.slice(0)
+              .reverse()
+              .map((rounds, key) =>
+                rounds
+                  .slice(0)
+                  .reverse()
+                  .map((number, i) => (
+                    // eslint-disable-next-line react/jsx-key
+                    <Card round={MyTicket.length - key} num={number} />
+                  ))
+              )}
         </CardContainer>
       </GreenBackground>
     </Container>

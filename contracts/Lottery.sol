@@ -55,19 +55,26 @@ contract Lottery {
         return lotteryTemp;
     }
 
-    function checkResult(uint256 _number, uint256 _round) public payable returns(string memory){
-        if(_round - 1 < round){
-            if(_number == resultHistory[round]){
-                payable( msg.sender).transfer(reward[_round]);
-                return "Congratulations!";
+    function checkResult(uint256 _number, uint256 _round) public view returns(string memory){
+        // if(_round - 1 < round){
+        //     if(_number == resultHistory[_round]){
+        //         // payable( msg.sender).transfer(reward[_round]);
+        //         return "true";
+        //     }
+        //     else{
+        //         return "false";
+        //     }
+        // }
+        // else{
+        //     return "This round has not yet been announced";
+        // }
+         if(_number == resultHistory[_round]){
+                // payable( msg.sender).transfer(reward[_round]);
+                return "true";
             }
             else{
-                return "Lose";
+                return "false";
             }
-        }
-        else{
-            return "This round has not yet been announced";
-        }
     }
 
     // function check() public payable {
@@ -119,6 +126,10 @@ contract Lottery {
         totalReward = 0;
         delete allLottery;
     
+    }
+
+      function getRound() public view returns(uint256 ) {
+        return round;
     }
 
   
