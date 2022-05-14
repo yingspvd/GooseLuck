@@ -14,6 +14,7 @@ import {
 
 export default function MyTicket() {
   const account = useAccount();
+  const [admin, setAdmin] = useState("admin");
   const [myWallet, setMyWallet] = useState(0);
   const round = "49";
   const date = "Draw: May 15, 2022, 7:00 AM";
@@ -65,7 +66,7 @@ export default function MyTicket() {
 
   return (
     <Container>
-      <Navbar myWallet={myWallet} />
+      <Navbar myWallet={myWallet} admin={admin} />
       <GreenBackground>
         <TitleContainer>
           <BigText>MY TICKETS</BigText>

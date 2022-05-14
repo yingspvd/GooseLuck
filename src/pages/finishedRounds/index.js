@@ -98,6 +98,7 @@ const roundArray = [
 export default function FinishedRounds() {
   const account = useAccount();
   const Lottery = useLottery();
+  const [admin, setAdmin] = useState("admin");
   const [myWallet, setMyWallet] = useState(0);
   const [resultHistory, setHisResult] = useState([123, 111]);
   const [dateHistory, setHisDate] = useState(["www", "ww"]);
@@ -126,7 +127,7 @@ export default function FinishedRounds() {
 
   return (
     <Container>
-      <Navbar myWallet={myWallet} />
+      <Navbar myWallet={myWallet} admin={admin} />
       <GreenBackground>
         <TitleContainer>
           <BigText>FINISHED ROUNDS</BigText>
