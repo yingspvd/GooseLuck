@@ -22,8 +22,8 @@ export default function Card({ ...props }) {
       </LotteryCard> */}
 
 
-      {props.status == "progress" ?
-        <LotteryCard>
+      {props.status == "lose" ?
+        <LotteryCard style={{background: "#8C4F1E", opacity: "0.5"}}>
           <Item>
             <BoldText>Round {props.round}</BoldText>
             <Text style={{ marginTop: "8px" }}>{props.date}</Text>
@@ -32,7 +32,10 @@ export default function Card({ ...props }) {
             <Number>{props.num}</Number>
           </Item>
           <Item>
-          <StyleButton>Check</StyleButton>
+            <StyleButton>Check</StyleButton>
+          </Item>
+          <Item>
+            <Announce style={{background: "#CDAD9E"}}>Loss</Announce>
           </Item>
         </LotteryCard>
         : props.status == "win" ?
@@ -52,7 +55,7 @@ export default function Card({ ...props }) {
           </Item>
         </LotteryCard>
         : 
-        <LotteryCard style={{background: "#8C4F1E", opacity: "0.5"}}>
+        <LotteryCard>
           <Item>
             <BoldText>Round {props.round}</BoldText>
             <Text style={{ marginTop: "8px" }}>{props.date}</Text>
@@ -61,10 +64,7 @@ export default function Card({ ...props }) {
             <Number>{props.num}</Number>
           </Item>
           <Item>
-            <StyleButton>Check</StyleButton>
-          </Item>
-          <Item>
-            <Announce style={{background: "#CDAD9E"}}>Try again</Announce>
+          <StyleButton>Check</StyleButton>
           </Item>
         </LotteryCard>
       }

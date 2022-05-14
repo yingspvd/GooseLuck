@@ -66,5 +66,10 @@ export const Announce = styled.div`
   width: 250px;
   height: 50px;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
-
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  letter-spacing: 2px;
 `;
