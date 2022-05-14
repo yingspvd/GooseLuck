@@ -34,6 +34,7 @@ export default function BuyTicket() {
   const lotteryFee = 0.001;
   const account = useAccount();
   const Lottery = useLottery();
+  const [admin, setAdmin] = useState("admin");
   const [myWallet, setMyWallet] = useState(0);
   const [totalReward, setTotalReward] = useState(0);
   const [ticketNumber, setTicketNumber] = useState(0);
@@ -242,7 +243,7 @@ export default function BuyTicket() {
 
   return (
     <Container>
-      <Navbar myWallet={myWallet} />
+      <Navbar myWallet={myWallet} admin={admin} />
       <GreenBackground>
         <Logo>
           <StyledImage src="/gooseluck.svg" />

@@ -17,6 +17,7 @@ export default function MyTicket() {
   const account = useAccount();
   const Lottery = useLottery();
 
+  const [admin, setAdmin] = useState("admin");
   const [myWallet, setMyWallet] = useState(0);
   const [MyTicket, setMyTicket] = useState("");
 
@@ -44,7 +45,7 @@ export default function MyTicket() {
 
   return (
     <Container>
-      <Navbar myWallet={myWallet} />
+      <Navbar myWallet={myWallet} admin={admin} />
       <GreenBackground>
         <TitleContainer>
           <BigText>MY TICKETS</BigText>
