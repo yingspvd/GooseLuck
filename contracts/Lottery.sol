@@ -6,43 +6,48 @@ contract Lottery {
     uint256 public reward;          // Reward in that round
     uint256[] public resultHistory;
     string[] public dateHistory;
-    string[] public nowDate;
+    string public nowDate;
     uint256[] public allLottery;
-    mapping(address => uint256) public accountBuy;         // amount of buy lottery
-    mapping(address => uint256[]) public numberLottery;    // number of lottery
-    
-        // mapping(address => uint256) public amountTicket; 
-        //     mapping(address =>   mapping(uint => uint256)) public somchai; 
-        //     [address][round][accountBuy[address]]
+    mapping(address => uint256) public accountBuy;          // amount of buy lottery
+    // mapping(address => uint256[]) public myLottery;         // number of lottery
+      
+    uint256 public round;
+    // string public roundDate;
+
+    uint256[][] public lotteryTemp;
+    mapping(address => uint256) public amountTicket;
+    mapping(address =>  mapping(uint256 => uint256[])) public myNewLottery;
+
 
     constructor(){
         owner = payable(msg.sender);
         totalReward = 0;
         reward = 0;
+        round = 0;
     }
-    
-    function buyLottery(uint256 fee, uint256 number) public payable{
+
+// ******************** Buy Ticket **************************
+    function buyNewLottery(uint256 fee, uint256 _number, address account) public payable{
         require(msg.value == fee && fee > 0);
-        accountBuy[msg.sender] += fee;
-        numberLottery[msg.sender].push(number);
-        allLottery.push(number);
+        accountBuy[account] += fee;
+        myNewLottery[account][round].push(_number);
+        allLottery.push(_number);
         totalReward += fee;
     }
 
-    function getReward() public view returns(uint256){
+    function getTotalReward() public view returns(uint256){
         return totalReward;
     }
 
-    function getNumTicket() public view returns(uint256){
-        return allLottery.length;
+    function getMyNewLottery(address account) public returns (uint256[][] memory){
+        for (uint256 i = 0; i <= round; i++) {
+            lotteryTemp.push(myNewLottery[account][i]);
+        }
+        return lotteryTemp;
     }
 
-    function keepResult(uint256 result, string memory anounce, string[] memory _nowDate) public  {
-        resultHistory.push(result);
-        dateHistory.push(anounce);
-        nowDate = _nowDate;
-    }
 
+// ******************** History **************************
     function getHistoryResult() public view returns(uint256[] memory){
         return resultHistory;
     }
@@ -51,52 +56,84 @@ contract Lottery {
         return dateHistory;
     }
 
-    function getDateNow() public view returns(string[] memory) {
+  // ******************** My Ticket **************************  
+    function checkResult(uint256 _number, uint256 _round) public payable returns(string memory){
+        if(_round - 1 < round){
+            if(_number == resultHistory[round]){
+                payable( msg.sender).transfer(reward);
+                return "Congratulations!";
+            }
+            else{
+                return "Lose";
+            }
+        }
+        else{
+            return "This round has not yet been announced";
+        }
+    }
+
+// ******************** Admin **************************
+    function getNumTicket() public view returns(uint256){
+        return allLottery.length;
+    }
+
+    function getDateNow() public view returns(string memory) {
         return nowDate;
     }
 
-
-// notuuse
-    function showLottery(address account) public view returns (uint256[] memory){
-        return numberLottery[account];
+    function calculateReward() public view returns(uint256){
+        uint256 count = 0;
+        for (uint256 i = 0; i < allLottery.length; i++) {
+            if(allLottery[i] == resultHistory[round]){
+                count += 1;
+            }
+        }
+        return count;
     }
 
+    function keepResult(uint256 result, string memory anounce, string memory _nowDate) public  {
+        uint256 count = 0;
+        resultHistory.push(result);
+        dateHistory.push(anounce);
+        nowDate = _nowDate;
+
+        count = calculateReward();
+        reward = totalReward / count;
+    }
+
+
+/////////////////// notuuse
     function showAllLottery() public view returns (uint256[] memory){
         return allLottery;
     }
 
-    
-
-    //  function keepDateAnnounce( string memory anounce, string[] memory _nowDate) public {
-    //     dateAnnounce.push(anounce);
-    //     nowDate = _nowDate;
+// function buyLottery(uint256 fee, uint256 number) public payable {
+    //     require(msg.value == fee && fee > 0);
+    //     accountBuy[msg.sender] += fee;
+    //     myLottery[msg.sender].push(number);
+    //     allLottery.push(number);
+    //     totalReward += fee;
     // }
 
-    function showDateAnnounce() public view returns(string[] memory) {
-        return dateHistory;
-    }
+        
+    // function buyNewLottery(uint256 fee, uint256 number, string memory date) public payable {
+    //     require(msg.value == fee && fee > 0);
+    //     accountBuy[msg.sender] += fee;
+    //     roundDate = date;
+    //     myLottery[msg.sender].push(number);
+    //     allLottery.push(number);
+    //     totalReward += fee;
+    // }
 
-    
+    // function getRoundDate() public view returns(string memory){
+    //     return roundDate;
+    // }
 
-    function checkResult(address account,uint256 result) public view returns(bool){
-        require(numberLottery[account].length > 0);
-        for (uint256 i = 0; i < numberLottery[account].length; i++) {
-            if(numberLottery[account][i] == result){
-                // payable(msg.sender).transfer(reward);
-                return true;
-            }   
-        }
-        return false;
-    }
+    // function getRound() public view returns(uint256){
+    //     return round;
+    // }
 
-    function calculateReward() public view {
-        // uint256 count = 0;
-        // for (uint256 i = 0; i < allLottery.length; i++) {
-        //     if(allLottery[i] == result){
-        //         count += 1;
-        //     }
-        // }
-        // reward = totalReward / count;
-    }
-
+//  function getMyLottery(address account) public view returns (uint256[] memory){
+//         return myLottery[account];
+//     }
 }

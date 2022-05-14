@@ -86,7 +86,7 @@ export default function BuyTicket() {
   }, [account]);
 
   const getTotalReward = useCallback(async () => {
-    const _reward = await Lottery.methods.getReward().call();
+    const _reward = await Lottery.methods.getTotalReward().call();
     setTotalReward(Web3.utils.fromWei(_reward, "ether"));
   }, [Lottery.methods]);
 
@@ -96,30 +96,73 @@ export default function BuyTicket() {
       const _dateNow = new Date();
       const dateArray = _dateNow.toString().split(" ");
       setDateNow(dateArray);
-      console.log("0: ", dateArray);
+      // console.log("0: ", dateArray);
     } else {
       setDateNow(_date);
-      console.log("db: ", _date);
+      // console.log("db: ", _date);
     }
   }, [Lottery.methods]);
 
-  const handleBuyTicket = async () => {
+  // const handleBuyNewTicket = async () => {
+  //   if (ticketNumber >= 100 && ticketNumber <= 999) {
+  //     const _fee = Web3.utils.toWei(lotteryFee.toString(), "ether");
+  //     const date = dateNow[1] + " " + dateNow[2] + ", " + dateNow[3];
+  //     console.log("DATE", date);
+  //     const re = await Lottery.methods
+  //       .buyNewLottery(_fee, ticketNumber, date)
+  //       .send({ from: account, value: _fee });
+  //     console.log("re", re);
+  //     setTicketNumber("");
+  //     getTotalReward();
+  //     getRoundDate();
+  //   } else {
+  //     alert("Number should have only 3 digits");
+  //   }
+  // };
+
+  const getRoundDate = useCallback(async () => {
+    const date = await Lottery.methods.getRound().call();
+    console.log("D: ", date);
+  }, [Lottery.methods]);
+
+  // const handleBuyTicket = async () => {
+  //   if (ticketNumber >= 100 && ticketNumber <= 999) {
+  //     const _fee = Web3.utils.toWei(lotteryFee.toString(), "ether");
+  //     await Lottery.methods
+  //       .buyLottery(_fee, ticketNumber, dateNow)
+  //       .send({ from: account, value: _fee });
+
+  //     setTicketNumber("");
+  //     getTotalReward();
+  //   } else {
+  //     alert("Number should have only 3 digits");
+  //   }
+  // };
+
+  const handleBuyNewTicket = async () => {
     if (ticketNumber >= 100 && ticketNumber <= 999) {
       const _fee = Web3.utils.toWei(lotteryFee.toString(), "ether");
       await Lottery.methods
-        .buyLottery(_fee, ticketNumber)
+        .buyNewLottery(_fee, ticketNumber, account)
         .send({ from: account, value: _fee });
+
       setTicketNumber("");
       getTotalReward();
+      getMyNewLottery();
     } else {
       alert("Number should have only 3 digits");
     }
   };
 
-  const dateNoe = () => {
-    var date = new Date();
-    const formatted = date.toString().split(" ");
-  };
+  const getMyNewLottery = useCallback(async () => {
+    const _lottery = await Lottery.methods.getMyNewLottery(account).call();
+    console.log(_lottery);
+  }, [Lottery.methods, account]);
+
+  const getMyLottery = useCallback(async () => {
+    const _lottery = await Lottery.methods.getMyLottery(account).call();
+    console.log(_lottery);
+  }, [Lottery.methods, account]);
 
   const calculateTimeLeft = () => {
     // let year = new Date().getFullYear();
@@ -240,7 +283,7 @@ export default function BuyTicket() {
             // pattern="\d{4}"
             // pattern="[0-9]*"
           />
-          <Button buyLottery={handleBuyTicket}></Button>
+          <Button buyLottery={handleBuyNewTicket}></Button>
         </InputContainer>
       </BrownBackground>
     </Container>
