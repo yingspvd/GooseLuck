@@ -91,16 +91,25 @@ contract Lottery {
         return count;
     }
 
-    function keepResult(uint256 result, string memory anounce, string memory _nowDate) public  {
+    function keepResult(uint256 result, string memory anounce, string memory _nowDate) public {
+        // uint256 count = 0;
         uint256 count = 0;
+        for (uint256 i = 0; i < allLottery.length; i++) {
+            if(allLottery[i] == resultHistory[round]){
+                count += 1;
+            }
+        }
+
+        if(count == 0){
+            reward = 0;
+        }
+        else{
+            reward = totalReward / count;
+        }
         resultHistory.push(result);
         dateHistory.push(anounce);
         nowDate = _nowDate;
-
-        count = calculateReward();
-        reward = totalReward / count;
     }
-
 
 /////////////////// notuuse
     function showAllLottery() public view returns (uint256[] memory){
