@@ -29,7 +29,7 @@ export default function Admin() {
   const [result, setResult] = useState(0);
 
   const getTotalReward = useCallback(async () => {
-    const _reward = await Lottery.methods.getReward().call();
+    const _reward = await Lottery.methods.getTotalReward().call();
     setTotalReward(Web3.utils.fromWei(_reward, "ether"));
   }, [Lottery.methods]);
 
