@@ -51,6 +51,10 @@ contract Lottery {
         return dateHistory;
     }
 
+    function getDateNow() public view returns(string[] memory) {
+        return nowDate;
+    }
+
 
 // notuuse
     function showLottery(address account) public view returns (uint256[] memory){
@@ -72,9 +76,7 @@ contract Lottery {
         return dateHistory;
     }
 
-    function showDateNow() public view returns(string[] memory) {
-        return nowDate;
-    }
+    
 
     function checkResult(address account,uint256 result) public view returns(bool){
         require(numberLottery[account].length > 0);
