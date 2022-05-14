@@ -124,8 +124,9 @@ export default function BuyTicket() {
     }
     if (difference < 0) {
       var nextFuture = new Date();
+      var addMinutes = new Date(nextFuture.getTime() + 1*60000);
       nextFuture.setDate(nextFuture.getDate() + 15);
-      setFuture(nextFuture);
+      setFuture(addMinutes);
       setFutureDate(DateNames[nextFuture.getDay()]);
       if (nextFuture.getDate() < 10) {
         setFutureDay("0" + nextFuture.getDate());
