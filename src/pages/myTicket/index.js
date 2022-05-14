@@ -1,4 +1,6 @@
-import React from "react";
+import React, {useCallback, useEffect, useState} from "react";
+import useAccount from "@hooks/useAccount";
+import Web3 from "web3";
 import Navbar from "../../components/Navbar";
 import Card from "../../components/Card";
 import {
@@ -11,9 +13,21 @@ import {
 } from "./styled";
 
 export default function MyTicket() {
+  const account = useAccount();
+  const [myWallet, setMyWallet] = useState(0);
   const round = "49";
   const date = "Draw: May 15, 2022, 7:00 AM";
   const num = "896";
+
+  useEffect(() => {
+    getMyWallet();
+  }, [getMyWallet]);
+
+  const getMyWallet = useCallback(async () => {
+    const _balance = await web3.eth.getBalance(account);
+    setMyWallet(parseFloat(Web3.utils.fromWei(_balance.toString(), "ether")));
+  }, [account]);
+
   const ticketsArray = [
     {
       round: "48",
@@ -66,7 +80,7 @@ export default function MyTicket() {
   ];
   return (
     <Container>
-      <Navbar />
+      <Navbar myWallet={myWallet} />
       <GreenBackground>
         <TitleContainer>
           <BigText>MY TICKETS</BigText>

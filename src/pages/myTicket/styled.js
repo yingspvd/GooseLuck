@@ -32,7 +32,6 @@ export const TitleContainer = styled.div`
 export const CardContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  // gap: 40px;
   row-gap: 40px;
   width: 80%;
   margin-top: 80px;
