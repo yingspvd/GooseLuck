@@ -63,16 +63,6 @@ export default function MyTicket() {
     },
   ];
 
-  const dateArray = [
-    "Aprill 15, 2022, 7:00 AM",
-    "Aprill 16, 2022, 7:00 AM",
-    "Aprill 17, 2022, 7:00 AM",
-    "Aprill 18, 2022, 7:00 AM",
-    "Aprill 19, 2022, 7:00 AM",
-    "Aprill 20, 2022, 7:00 AM",
-    "Aprill 21, 2022, 7:00 AM",
-    "Aprill 22, 2022, 7:00 AM",
-  ];
   const check = true;
   return (
     <Container>
