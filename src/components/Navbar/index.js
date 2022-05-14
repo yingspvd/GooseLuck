@@ -29,6 +29,9 @@ export default function Navbar({ ...props }) {
           <StyledLink onClick={() => router.push('/buyTicket')}>Buy Tickets</StyledLink>
           <StyledLink onClick={() => router.push('/finishedRounds')}>Finished Rounds</StyledLink>
           <StyledLink onClick={() => router.push('/myTicket')}>My Tickets</StyledLink>
+          {props.admin == "admin" ?
+          <StyledLink onClick={() => router.push('/admin')}>Admin</StyledLink> : null  
+          } 
         </MenuItem>
       </Menu>
       <ItemContainer>
