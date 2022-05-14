@@ -38,13 +38,13 @@ export default function BuyTicket() {
   const [dateNow, setDateNow] = useState("");
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
-  const [future, setFuture] = useState("05/14/2022");
-  const [futureDate, setFutureDate] = useState("Fri");
-  const [futureDay, setFutureDay] = useState("14");
-  const [futureMonth, setFutureMonth] = useState("May");
-  const [futureYear, setFutureYear] = useState("2022");
-  const [futureHours, setFutureHours] = useState("00");
-  const [futureMinutes, setFutureMinutes] = useState("00");
+  const [future, setFuture] = useState();
+  // const [futureDate, setFutureDate] = useState();
+  // const [futureDay, setFutureDay] = useState();
+  // const [futureMonth, setFutureMonth] = useState();
+  // const [futureYear, setFutureYear] = useState();
+  // const [futureHours, setFutureHours] = useState();
+  // const [futureMinutes, setFutureMinutes] = useState();
   const [difference, setDifference] = useState();
   const [days, setDays] = useState();
   const [hours, setHours] = useState();
@@ -94,11 +94,20 @@ export default function BuyTicket() {
     const _date = await Lottery.methods.getDateNow().call();
     if (_date.length == 0) {
       const _dateNow = new Date();
-      const dateArray = _dateNow.toString().split(" ");
+      console.log(_dateNow);
+      console.log(typeof(_dateNow));
+      const addMinutes = new Date(_dateNow.getTime() + 1*60000);
+      // _dateNow.setDate(_dateNow.getDate() + 15);
+      setFuture(addMinutes);
+      const dateArray = addMinutes.toString().split(" ");
       setDateNow(dateArray);
       console.log("0: ", dateArray);
     } else {
-      setDateNow(_date);
+      const dateObj = new Date(_date);
+      const addMinutes = new Date(dateObj.getTime() + 1*60000);
+      setFuture(addMinutes);
+      const dateArray = addMinutes.toString().split(" ");
+      setDateNow(dateArray);
       console.log("db: ", _date);
     }
   }, [Lottery.methods]);
@@ -155,39 +164,39 @@ export default function BuyTicket() {
         setSeconds(timeLeft.seconds);
       }
     }
-    if (difference < 0) {
-      var nextFuture = new Date();
-      var addMinutes = new Date(nextFuture.getTime() + 1*60000);
-      nextFuture.setDate(nextFuture.getDate() + 15);
-      setFuture(addMinutes);
-      setFutureDate(DateNames[nextFuture.getDay()]);
-      if (nextFuture.getDate() < 10) {
-        setFutureDay("0" + nextFuture.getDate());
-      } else {
-        setFutureDay(nextFuture.getDate());
-      }
-      setFutureMonth(monthNames[nextFuture.getMonth()]);
-      setFutureYear(nextFuture.getFullYear());
-      if (nextFuture.getHours() < 10) {
-        setFutureHours("0" + nextFuture.getHours());
-      } else {
-        setFutureHours(nextFuture.getHours());
-      }
-      if (nextFuture.getMinutes() < 10) {
-        setFutureMinutes("0" + nextFuture.getMinutes());
-      } else {
-        setFutureMinutes(nextFuture.getMinutes());
-      }
+    // if (difference < 0) {
+    //   var nextFuture = new Date();
+    //   var addMinutes = new Date(nextFuture.getTime() + 1*60000);
+    //   nextFuture.setDate(nextFuture.getDate() + 15);
+    //   setFuture(addMinutes);
+    //   setFutureDate(DateNames[nextFuture.getDay()]);
+    //   if (nextFuture.getDate() < 10) {
+    //     setFutureDay("0" + nextFuture.getDate());
+    //   } else {
+    //     setFutureDay(nextFuture.getDate());
+    //   }
+    //   setFutureMonth(monthNames[nextFuture.getMonth()]);
+    //   setFutureYear(nextFuture.getFullYear());
+    //   if (nextFuture.getHours() < 10) {
+    //     setFutureHours("0" + nextFuture.getHours());
+    //   } else {
+    //     setFutureHours(nextFuture.getHours());
+    //   }
+    //   if (nextFuture.getMinutes() < 10) {
+    //     setFutureMinutes("0" + nextFuture.getMinutes());
+    //   } else {
+    //     setFutureMinutes(nextFuture.getMinutes());
+    //   }
 
-      // console.log(futureDate)
-      // console.log(futureMonth);
-      // console.log(nextFuture);
-      // console.log(
-      //   `${nextFuture.getDay()}/${nextFuture.getDate()}/${
-      //     nextFuture.getMonth() + 1
-      //   }/${nextFuture.getFullYear()}/${nextFuture.getHours()}//${nextFuture.getMinutes()}`
-      // );
-    }
+    //   // console.log(futureDate)
+    //   // console.log(futureMonth);
+    //   // console.log(nextFuture);
+    //   // console.log(
+    //   //   `${nextFuture.getDay()}/${nextFuture.getDate()}/${
+    //   //     nextFuture.getMonth() + 1
+    //   //   }/${nextFuture.getFullYear()}/${nextFuture.getHours()}//${nextFuture.getMinutes()}`
+    //   // );
+    // }
   };
 
   return (
@@ -204,8 +213,8 @@ export default function BuyTicket() {
         <TimeContainer>
           <InfoBrown style={{ marginRight: 60 }}>Next Draw</InfoBrown>
           <InfoBrown style={{ fontSize: 16 }}>
-            Round 50 | Draw: {futureDate} {futureMonth} {futureDay},{" "}
-            {futureYear}, {futureHours}:{futureMinutes}
+            Round 50 | Draw: {dateNow[0]} {dateNow[1]} {dateNow[2]},{" "}
+            {dateNow[3]}, {dateNow[4]}
           </InfoBrown>
         </TimeContainer>
         <TimeContainer>
@@ -241,7 +250,11 @@ export default function BuyTicket() {
             // pattern="\d{4}"
             // pattern="[0-9]*"
           />
-          <Button buyLottery={handleBuyTicket}></Button>
+          {difference > 0 
+          ? <Button buyLottery={handleBuyTicket}>buy</Button>
+          : <Button buyLottery={handleBuyTicket}>result</Button>
+          }
+          
         </InputContainer>
       </BrownBackground>
     </Container>
