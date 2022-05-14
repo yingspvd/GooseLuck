@@ -3,7 +3,7 @@ import { useLottery } from "@hooks/useContracts";
 import React, { useCallback, useEffect, useState } from "react";
 import Web3 from "web3";
 import Navbar from "../../components/Navbar";
-import Button from "../../components/Button";
+import { useRouter } from 'next/router'
 
 import {
   Container,
@@ -26,9 +26,11 @@ import {
   InfoBrown,
   InputContainer,
   InputNumber,
+  StyledButton,
 } from "./styled";
 
 export default function BuyTicket() {
+  const router = useRouter()
   const lotteryFee = 0.001;
   const account = useAccount();
   const Lottery = useLottery();
@@ -196,6 +198,13 @@ export default function BuyTicket() {
         setSeconds(timeLeft.seconds);
       }
     }
+
+    if (difference < 0) {
+      setDays("00");
+      setHours("00");
+      setMinutes("00");
+      setSeconds("00");
+    }
     // if (difference < 0) {
     //   var nextFuture = new Date();
     //   var addMinutes = new Date(nextFuture.getTime() + 1*60000);
@@ -272,22 +281,26 @@ export default function BuyTicket() {
         </TimeContainer>
       </WhiteBackground>
       <BrownBackground>
-        <InfoWhite>Get your tickets now!</InfoWhite>
-        <InputContainer>
-          <InputNumber
-            placeholder="ENTER 3 DIGIT NUMBER"
-            type="number"
-            maxLength="3"
-            onChange={(e) => setTicketNumber(e.target.value)}
-            // pattern="\d{4}"
-            // pattern="[0-9]*"
-          />
-          {difference > 0 ? (
-            <Button buyLottery={handleBuyTicket}>buy</Button>
-          ) : (
-            <Button buyLottery={handleBuyTicket}>result</Button>
-          )}
-        </InputContainer>
+        {
+          difference > 0 
+          ? 
+          <>
+          <InfoWhite>Get your tickets now!</InfoWhite>
+          <InputContainer>
+            <InputNumber
+              placeholder="ENTER 3 DIGIT NUMBER"
+              type="number"
+              maxLength="3"
+              onChange={(e) => setTicketNumber(e.target.value)}
+              // pattern="\d{4}"
+              // pattern="[0-9]*"
+            />
+            <StyledButton onClick={() => handleBuyTicket()}>Buy Ticket</StyledButton>
+          </InputContainer>
+          </>
+          :
+          <StyledButton onClick={() => router.push('/finishedRounds')}>Lottery Result</StyledButton>
+        }
       </BrownBackground>
     </Container>
   );

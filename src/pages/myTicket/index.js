@@ -63,7 +63,6 @@ export default function MyTicket() {
     },
   ];
 
-  const check = true;
   return (
     <Container>
       <Navbar myWallet={myWallet} />
@@ -78,7 +77,7 @@ export default function MyTicket() {
             .reverse()
             .map((rounds, key) =>
               rounds.num.map((number, key) => (
-                <Card round={rounds.round} num={number} />
+                <Card round={rounds.round} num={number}/>
               ))
             )}
         </CardContainer>
@@ -86,7 +85,3 @@ export default function MyTicket() {
     </Container>
   );
 }
-
-// detail.num.map((ticket, i) => (
-//   <Card round={detail.round} num={ticket} />
-// ));
