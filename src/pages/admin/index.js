@@ -23,7 +23,8 @@ import {
 export default function Admin() {
   const account = useAccount();
   const Lottery = useLottery();
-
+  const [admin, setAdmin] = useState("admin");
+  const [myWallet, setMyWallet] = useState(0);
   const [totalReward, setTotalReward] = useState(0);
   const [numTicket, setNumTicket] = useState(0);
   const [result, setResult] = useState(0);
@@ -58,20 +59,27 @@ export default function Admin() {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
+  const getMyWallet = useCallback(async () => {
+    const _balance = await web3.eth.getBalance(account);
+    setMyWallet(parseFloat(Web3.utils.fromWei(_balance.toString(), "ether")));
+  }, [account]);
+
   useEffect(() => {
     getTotalReward();
     getNumTicket();
-  }, [getTotalReward, getNumTicket]);
+    getMyWallet();
+  }, [getTotalReward, getNumTicket, getMyWallet]);
+
   return (
     <Container>
-      <Navbar />
+      <Navbar myWallet={myWallet} admin={admin} />
       <GreenBackground>
         <TitleContainer>
           <BigText>GOOSELUCK MANAGEMENT</BigText>
           <StyledImage src="/egg.png" />
         </TitleContainer>
         <RandomBox>
-          <RandomText default="000">{result}</RandomText>
+          <RandomText>{result}</RandomText>
         </RandomBox>
         <StyledButton
           onClick={handleRandomNum}
