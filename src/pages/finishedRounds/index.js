@@ -98,7 +98,7 @@ const roundArray = [
 export default function FinishedRounds() {
   const account = useAccount();
   const Lottery = useLottery();
-
+  const [myWallet, setMyWallet] = useState(0);
   const [resultHistory, setHisResult] = useState([123, 111]);
   const [dateHistory, setHisDate] = useState(["www", "ww"]);
 
@@ -116,11 +116,17 @@ export default function FinishedRounds() {
 
   useEffect(() => {
     getHistoryResult();
-  }, [getHistoryResult]);
+    getMyWallet();
+  }, [getHistoryResult, getMyWallet]);
+
+  const getMyWallet = useCallback(async () => {
+    const _balance = await web3.eth.getBalance(account);
+    setMyWallet(parseFloat(Web3.utils.fromWei(_balance.toString(), "ether")));
+  }, [account]);
 
   return (
     <Container>
-      <Navbar />
+      <Navbar myWallet={myWallet} />
       <GreenBackground>
         <TitleContainer>
           <BigText>FINISHED ROUNDS</BigText>

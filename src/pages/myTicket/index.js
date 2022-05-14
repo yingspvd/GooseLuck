@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useAccount from "@hooks/useAccount";
 import Web3 from "web3";
 import Navbar from "../../components/Navbar";
@@ -31,53 +31,49 @@ export default function MyTicket() {
   const ticketsArray = [
     {
       round: "48",
-      date: "Draw: May 15, 2022, 7:00 AM",
-      num: "896",
-      status: "win",
+      num: ["896", "156", "859"],
     },
     {
       round: "49",
-      date: "Draw: May 15, 2022, 7:00 AM",
-      num: "896",
-      status: "lose",
+      num: ["896", "156", "859"],
     },
     {
       round: "50",
-      date: "Draw: May 15, 2022, 7:00 AM",
-      num: "896",
-      status: "progress",
+      num: ["896", "156", "859"],
     },
     {
-      round: "47",
-      date: "Draw: May 15, 2022, 7:00 AM",
-      num: "896",
-      status: "lose",
+      round: "51",
+      num: ["896", "156", "859"],
     },
     {
-      round: "46",
-      date: "Draw: May 15, 2022, 7:00 AM",
-      num: "896",
-      status: "win",
+      round: "52",
+      num: ["896", "156", "859"],
     },
     {
-      round: "50",
-      date: "Draw: May 15, 2022, 7:00 AM",
-      num: "896",
-      status: "progress",
+      round: "53",
+      num: ["896", "156", "859"],
     },
     {
-      round: "50",
-      date: "Draw: May 15, 2022, 7:00 AM",
-      num: "896",
-      status: "progress",
+      round: "54",
+      num: ["896", "156", "859"],
     },
     {
-      round: "50",
-      date: "Draw: May 15, 2022, 7:00 AM",
-      num: "896",
-      status: "progress",
+      round: "55",
+      num: ["896", "156", "859"],
     },
   ];
+
+  const dateArray = [
+    "Aprill 15, 2022, 7:00 AM",
+    "Aprill 16, 2022, 7:00 AM",
+    "Aprill 17, 2022, 7:00 AM",
+    "Aprill 18, 2022, 7:00 AM",
+    "Aprill 19, 2022, 7:00 AM",
+    "Aprill 20, 2022, 7:00 AM",
+    "Aprill 21, 2022, 7:00 AM",
+    "Aprill 22, 2022, 7:00 AM",
+  ];
+  const check = true;
   return (
     <Container>
       <Navbar myWallet={myWallet} />
@@ -87,16 +83,20 @@ export default function MyTicket() {
           <StyledImage src="/nest.png" />
         </TitleContainer>
         <CardContainer>
-          {ticketsArray.map((detail,key) => (
-            detail.status == "progress" ?
-            <Card round={detail.round} date={detail.date} num={detail.num} status={detail.status}/>
-            : detail.status == "win" ? 
-            <Card round={detail.round} date={detail.date} num={detail.num} status={detail.status}/>
-            : <Card round={detail.round} date={detail.date} num={detail.num} status={detail.status}/>
-          ))}
-          
+          {ticketsArray
+            .slice(0, -1)
+            .reverse()
+            .map((rounds, key) =>
+              rounds.num.map((number, key) => (
+                <Card round={rounds.round} num={number} />
+              ))
+            )}
         </CardContainer>
       </GreenBackground>
     </Container>
   );
 }
+
+// detail.num.map((ticket, i) => (
+//   <Card round={detail.round} num={ticket} />
+// ));
