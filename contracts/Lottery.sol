@@ -82,6 +82,15 @@ contract Lottery {
     }
 
 // ******************** Admin **************************
+    function checkIsAdmin(address account) public view returns(bool){
+        if(account == owner){
+            return true;
+        }
+        else{
+            return false;
+        }   
+    }
+
     function getNumTicket() public view returns(uint256){
         return allLottery.length;
     }
