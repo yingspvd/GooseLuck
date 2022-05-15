@@ -21,35 +21,16 @@ export default function Card({ ...props }) {
 
   const checkResult = useCallback(
     async (round, num) => {
-      console.log("round ", round);
-      console.log("num ", num);
-      const status = await Lottery.methods.checkResult(num, round - 1).call();
-      if (status == true) {
-        setMyStatus(true);
-      } else if (status == false) {
-        setMyStatus(false);
+      const roundCard = round - 1;
+      if (roundCard < props.roundNow) {
+        const status = await Lottery.methods.checkResult(num, roundCard).call();
+        setMyStatus(status);
       } else {
-        alert(status);
+        alert("This round has not yet been announced");
       }
     },
-    [Lottery.methods]
+    [Lottery.methods, props.roundNow]
   );
-
-  const getMyStatus = (num) => {
-    if (num == 859) {
-      setMyStatus(true);
-    } else {
-      setMyStatus(false);
-    }
-
-    console.log("status", myStatus);
-  };
-
-  const checkNum = (round, num) => {
-    console.log("round", round);
-    console.log("num", num);
-    getMyStatus(num);
-  };
 
   return (
     <CardContainer>

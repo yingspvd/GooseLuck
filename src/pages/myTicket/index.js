@@ -20,8 +20,9 @@ export default function MyTicket() {
   const [admin, setAdmin] = useState("admin");
   const [myWallet, setMyWallet] = useState(0);
   const [MyTicket, setMyTicket] = useState("");
+  const [roundNow, setRoundNow] = useState(0);
 
-///////// getRound check ว่าถูกรอบมั้ย
+  ///////// getRound check ว่าถูกรอบมั้ย
   useEffect(() => {
     getMyWallet();
     getMyTicket();
@@ -40,6 +41,7 @@ export default function MyTicket() {
 
   const getRound = useCallback(async () => {
     const _round = await Lottery.methods.getRound().call();
+    setRoundNow(_round);
     console.log(_round);
   }, [Lottery.methods]);
 
@@ -61,7 +63,11 @@ export default function MyTicket() {
                   .reverse()
                   .map((number, i) => (
                     // eslint-disable-next-line react/jsx-key
-                    <Card round={MyTicket.length - key} num={number} />
+                    <Card
+                      roundNow={roundNow}
+                      round={MyTicket.length - key}
+                      num={number}
+                    />
                   ))
               )}
         </CardContainer>
