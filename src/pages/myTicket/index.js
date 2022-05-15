@@ -22,7 +22,6 @@ export default function MyTicket() {
   const [MyTicket, setMyTicket] = useState("");
   const [roundNow, setRoundNow] = useState(0);
 
-  ///////// getRound check ว่าถูกรอบมั้ย
   useEffect(() => {
     getMyWallet();
     getMyTicket();
@@ -42,7 +41,6 @@ export default function MyTicket() {
   const getRound = useCallback(async () => {
     const _round = await Lottery.methods.getRound().call();
     setRoundNow(_round);
-    console.log(_round);
   }, [Lottery.methods]);
 
   return (

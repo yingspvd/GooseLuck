@@ -18,18 +18,32 @@ export default function Card({ ...props }) {
   const Lottery = useLottery();
 
   const [myStatus, setMyStatus] = useState();
+  const [myWallet, setMyWallet] = useState(0);
+
+  useEffect(() => {
+    getMyWallet();
+  }, [getMyWallet]);
+
+  const getMyWallet = useCallback(async () => {
+    const _balance = await web3.eth.getBalance(account);
+    const test = parseFloat(Web3.utils.fromWei(_balance.toString(), "ether"));
+  }, [account]);
 
   const checkResult = useCallback(
     async (round, num) => {
       const roundCard = round - 1;
       if (roundCard < props.roundNow) {
-        const status = await Lottery.methods.checkResult(num, roundCard).call();
+        await Lottery.methods
+          .checkResult(account, num, roundCard)
+          .send({ from: account });
+        const status = await Lottery.methods.getStatus().call();
         setMyStatus(status);
+        getMyWallet();
       } else {
         alert("This round has not yet been announced");
       }
     },
-    [Lottery.methods, props.roundNow]
+    [Lottery.methods, account, getMyWallet, props.roundNow]
   );
 
   return (
