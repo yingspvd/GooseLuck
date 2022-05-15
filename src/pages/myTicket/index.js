@@ -17,7 +17,6 @@ export default function MyTicket() {
   const account = useAccount();
   const Lottery = useLottery();
 
-  const [admin, setAdmin] = useState("admin");
   const [myWallet, setMyWallet] = useState(0);
   const [MyTicket, setMyTicket] = useState("");
   const [roundNow, setRoundNow] = useState(0);
@@ -31,10 +30,6 @@ export default function MyTicket() {
   const getMyWallet = useCallback(async () => {
     const _balance = await web3.eth.getBalance(account);
     setMyWallet(parseFloat(Web3.utils.fromWei(_balance.toString(), "ether")));
-    console.log(
-      "wallet",
-      parseFloat(Web3.utils.fromWei(_balance.toString(), "ether"))
-    );
   }, [account]);
 
   const getMyTicket = useCallback(async () => {
@@ -49,7 +44,7 @@ export default function MyTicket() {
 
   return (
     <Container>
-      <Navbar myWallet={myWallet} admin={admin} />
+      <Navbar myWallet={myWallet} />
       <GreenBackground>
         <TitleContainer>
           <BigText>MY TICKETS</BigText>

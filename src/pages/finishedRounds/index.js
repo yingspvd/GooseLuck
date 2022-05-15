@@ -24,93 +24,16 @@ import {
   PastRound,
 } from "./styled";
 
-const round = "49";
-const date = "May 01, 2022, 7:00 AM";
-const latestNum = "485";
-const roundArray = [
-  {
-    round: "48",
-    num: "156",
-    date: "Aprill 15, 2022, 7:00 AM",
-  },
-  {
-    round: "47",
-    num: "856",
-    date: "Aprill 15, 2022, 7:00 AM",
-  },
-  {
-    round: "46",
-    num: "965",
-    date: "Aprill 15, 2022, 7:00 AM",
-  },
-  {
-    round: "45",
-    num: "039",
-    date: "Aprill 15, 2022, 7:00 AM",
-  },
-  {
-    round: "44",
-    num: "027",
-    date: "Aprill 15, 2022, 7:00 AM",
-  },
-  {
-    round: "43",
-    num: "456",
-    date: "Aprill 15, 2022, 7:00 AM",
-  },
-  {
-    round: "42",
-    num: "752",
-    date: "Aprill 15, 2022, 7:00 AM",
-  },
-  {
-    round: "42",
-    num: "752",
-    date: "Aprill 15, 2022, 7:00 AM",
-  },
-  {
-    round: "42",
-    num: "752",
-    date: "Aprill 15, 2022, 7:00 AM",
-  },
-  {
-    round: "42",
-    num: "752",
-    date: "Aprill 15, 2022, 7:00 AM",
-  },
-  {
-    round: "42",
-    num: "752",
-    date: "Aprill 15, 2022, 7:00 AM",
-  },
-  {
-    round: "42",
-    num: "752",
-    date: "Aprill 15, 2022, 7:00 AM",
-  },
-  {
-    round: "42",
-    num: "752",
-    date: "Aprill 15, 2022, 7:00 AM",
-  },
-];
-
 export default function FinishedRounds() {
   const account = useAccount();
   const Lottery = useLottery();
-  const [admin, setAdmin] = useState("admin");
   const [myWallet, setMyWallet] = useState(0);
   const [resultHistory, setHisResult] = useState([123, 111]);
-  const [dateHistory, setHisDate] = useState(["www", "ww"]);
-
-  const lotteryTemp = [111, 222, 333];
-  const dateTemp = ["111", "222", "333"];
+  const [dateHistory, setHisDate] = useState(["", ""]);
 
   const getHistoryResult = useCallback(async () => {
     const _hisResult = await Lottery.methods.getHistoryResult().call();
     const _hisDate = await Lottery.methods.getHistoryDate().call();
-
-    console.log(_hisResult);
     setHisResult(_hisResult);
     setHisDate(_hisDate);
   }, [Lottery.methods]);
@@ -127,7 +50,7 @@ export default function FinishedRounds() {
 
   return (
     <Container>
-      <Navbar myWallet={myWallet} admin={admin} />
+      <Navbar myWallet={myWallet} />
       <GreenBackground>
         <TitleContainer>
           <BigText>FINISHED ROUNDS</BigText>

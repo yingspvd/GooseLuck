@@ -23,7 +23,6 @@ import {
 export default function Admin() {
   const account = useAccount();
   const Lottery = useLottery();
-  const [admin, setAdmin] = useState("admin");
   const [myWallet, setMyWallet] = useState(0);
   const [totalReward, setTotalReward] = useState(0);
   const [numTicket, setNumTicket] = useState(0);
@@ -74,7 +73,7 @@ export default function Admin() {
 
   return (
     <Container>
-      <Navbar myWallet={myWallet} admin={admin} />
+      <Navbar myWallet={myWallet} />
       <GreenBackground>
         <TitleContainer>
           <BigText>GOOSELUCK MANAGEMENT</BigText>

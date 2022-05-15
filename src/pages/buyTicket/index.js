@@ -31,10 +31,9 @@ import {
 
 export default function BuyTicket() {
   const router = useRouter();
-  const lotteryFee = 2; //0.001
+  const lotteryFee = 1;
   const account = useAccount();
   const Lottery = useLottery();
-  const [admin, setAdmin] = useState("admin");
   const [myWallet, setMyWallet] = useState(0);
   const [totalReward, setTotalReward] = useState(0);
   const [ticketNumber, setTicketNumber] = useState(0);
@@ -102,7 +101,6 @@ export default function BuyTicket() {
       setFuture(addMinutes);
       const dateArray = addMinutes.toString().split(" ");
       setDateNow(dateArray);
-      console.log("db: ", _date);
     }
   }, [Lottery.methods, updateDate]);
 
@@ -166,7 +164,7 @@ export default function BuyTicket() {
 
   return (
     <Container>
-      <Navbar myWallet={myWallet} admin={admin} />
+      <Navbar myWallet={myWallet} />
       <GreenBackground>
         <Logo>
           <StyledImage src="/gooseluck.svg" />
