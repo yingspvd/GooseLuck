@@ -29,6 +29,17 @@ export default function Admin() {
   const [numTicket, setNumTicket] = useState(0);
   const [result, setResult] = useState(0);
 
+  useEffect(() => {
+    getTotalReward();
+    getNumTicket();
+    getMyWallet();
+  }, [getTotalReward, getNumTicket, getMyWallet]);
+
+  const getMyWallet = useCallback(async () => {
+    const _balance = await web3.eth.getBalance(account);
+    setMyWallet(parseFloat(Web3.utils.fromWei(_balance.toString(), "ether")));
+  }, [account]);
+
   const getTotalReward = useCallback(async () => {
     const _reward = await Lottery.methods.getTotalReward().call();
     setTotalReward(Web3.utils.fromWei(_reward, "ether"));
@@ -41,6 +52,7 @@ export default function Admin() {
 
   const handleRandomNum = async () => {
     const _result = randomNumber(100, 999);
+    _result = 111;
     const _date = new Date();
     const dateString = _date.toString();
     const dateArray = _date.toString().split(" ");
@@ -53,22 +65,12 @@ export default function Admin() {
     setResult(_result);
     getTotalReward();
     getNumTicket();
+    getMyWallet();
   };
 
   const randomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
-
-  const getMyWallet = useCallback(async () => {
-    const _balance = await web3.eth.getBalance(account);
-    setMyWallet(parseFloat(Web3.utils.fromWei(_balance.toString(), "ether")));
-  }, [account]);
-
-  useEffect(() => {
-    getTotalReward();
-    getNumTicket();
-    getMyWallet();
-  }, [getTotalReward, getNumTicket, getMyWallet]);
 
   return (
     <Container>
