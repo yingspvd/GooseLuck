@@ -3,7 +3,7 @@ import { useLottery } from "@hooks/useContracts";
 import React, { useCallback, useEffect, useState } from "react";
 import Web3 from "web3";
 import Navbar from "../../components/Navbar";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 import {
   Container,
@@ -30,8 +30,8 @@ import {
 } from "./styled";
 
 export default function BuyTicket() {
-  const router = useRouter()
-  const lotteryFee = 0.001;
+  const router = useRouter();
+  const lotteryFee = 2; //0.001
   const account = useAccount();
   const Lottery = useLottery();
   const [admin, setAdmin] = useState("admin");
@@ -42,12 +42,6 @@ export default function BuyTicket() {
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
   const [future, setFuture] = useState();
-  // const [futureDate, setFutureDate] = useState();
-  // const [futureDay, setFutureDay] = useState();
-  // const [futureMonth, setFutureMonth] = useState();
-  // const [futureYear, setFutureYear] = useState();
-  // const [futureHours, setFutureHours] = useState();
-  // const [futureMinutes, setFutureMinutes] = useState();
   const [difference, setDifference] = useState();
   const [days, setDays] = useState();
   const [hours, setHours] = useState();
@@ -115,42 +109,6 @@ export default function BuyTicket() {
     }
   }, [Lottery.methods]);
 
-  // const handleBuyNewTicket = async () => {
-  //   if (ticketNumber >= 100 && ticketNumber <= 999) {
-  //     const _fee = Web3.utils.toWei(lotteryFee.toString(), "ether");
-  //     const date = dateNow[1] + " " + dateNow[2] + ", " + dateNow[3];
-  //     console.log("DATE", date);
-  //     const re = await Lottery.methods
-  //       .buyNewLottery(_fee, ticketNumber, date)
-  //       .send({ from: account, value: _fee });
-  //     console.log("re", re);
-  //     setTicketNumber("");
-  //     getTotalReward();
-  //     getRoundDate();
-  //   } else {
-  //     alert("Number should have only 3 digits");
-  //   }
-  // };
-
-  const getRoundDate = useCallback(async () => {
-    const date = await Lottery.methods.getRound().call();
-    console.log("D: ", date);
-  }, [Lottery.methods]);
-
-  // const handleBuyTicket = async () => {
-  //   if (ticketNumber >= 100 && ticketNumber <= 999) {
-  //     const _fee = Web3.utils.toWei(lotteryFee.toString(), "ether");
-  //     await Lottery.methods
-  //       .buyLottery(_fee, ticketNumber, dateNow)
-  //       .send({ from: account, value: _fee });
-
-  //     setTicketNumber("");
-  //     getTotalReward();
-  //   } else {
-  //     alert("Number should have only 3 digits");
-  //   }
-  // };
-
   const handleBuyTicket = async () => {
     if (ticketNumber >= 100 && ticketNumber <= 999) {
       const _fee = Web3.utils.toWei(lotteryFee.toString(), "ether");
@@ -160,6 +118,7 @@ export default function BuyTicket() {
 
       setTicketNumber("");
       getTotalReward();
+      getMyWallet();
     } else {
       alert("Number should have only 3 digits");
     }
@@ -206,39 +165,6 @@ export default function BuyTicket() {
       setMinutes("00");
       setSeconds("00");
     }
-    // if (difference < 0) {
-    //   var nextFuture = new Date();
-    //   var addMinutes = new Date(nextFuture.getTime() + 1*60000);
-    //   nextFuture.setDate(nextFuture.getDate() + 15);
-    //   setFuture(addMinutes);
-    //   setFutureDate(DateNames[nextFuture.getDay()]);
-    //   if (nextFuture.getDate() < 10) {
-    //     setFutureDay("0" + nextFuture.getDate());
-    //   } else {
-    //     setFutureDay(nextFuture.getDate());
-    //   }
-    //   setFutureMonth(monthNames[nextFuture.getMonth()]);
-    //   setFutureYear(nextFuture.getFullYear());
-    //   if (nextFuture.getHours() < 10) {
-    //     setFutureHours("0" + nextFuture.getHours());
-    //   } else {
-    //     setFutureHours(nextFuture.getHours());
-    //   }
-    //   if (nextFuture.getMinutes() < 10) {
-    //     setFutureMinutes("0" + nextFuture.getMinutes());
-    //   } else {
-    //     setFutureMinutes(nextFuture.getMinutes());
-    //   }
-
-    //   // console.log(futureDate)
-    //   // console.log(futureMonth);
-    //   // console.log(nextFuture);
-    //   // console.log(
-    //   //   `${nextFuture.getDay()}/${nextFuture.getDate()}/${
-    //   //     nextFuture.getMonth() + 1
-    //   //   }/${nextFuture.getFullYear()}/${nextFuture.getHours()}//${nextFuture.getMinutes()}`
-    //   // );
-    // }
   };
 
   return (
@@ -282,26 +208,28 @@ export default function BuyTicket() {
         </TimeContainer>
       </WhiteBackground>
       <BrownBackground>
-        {
-          difference > 0 
-          ? 
+        {difference > 0 ? (
           <>
-          <InfoWhite>Get your tickets now!</InfoWhite>
-          <InputContainer>
-            <InputNumber
-              placeholder="ENTER 3 DIGIT NUMBER"
-              type="number"
-              maxLength="3"
-              onChange={(e) => setTicketNumber(e.target.value)}
-              // pattern="\d{4}"
-              // pattern="[0-9]*"
-            />
-            <StyledButton onClick={() => handleBuyTicket()}>Buy Ticket</StyledButton>
-          </InputContainer>
+            <InfoWhite>Get your tickets now!</InfoWhite>
+            <InputContainer>
+              <InputNumber
+                placeholder="ENTER 3 DIGIT NUMBER"
+                type="number"
+                maxLength="3"
+                onChange={(e) => setTicketNumber(e.target.value)}
+                // pattern="\d{4}"
+                // pattern="[0-9]*"
+              />
+              <StyledButton onClick={() => handleBuyTicket()}>
+                Buy Ticket
+              </StyledButton>
+            </InputContainer>
           </>
-          :
-          <StyledButton onClick={() => router.push('/finishedRounds')}>Lottery Result</StyledButton>
-        }
+        ) : (
+          <StyledButton onClick={() => router.push("/finishedRounds")}>
+            Lottery Result
+          </StyledButton>
+        )}
       </BrownBackground>
     </Container>
   );
