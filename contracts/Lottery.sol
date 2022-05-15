@@ -1,39 +1,33 @@
 pragma solidity 0.8.13;
 
 contract Lottery { 
-    address payable public owner;
-    uint256 public totalReward;
-    uint256 public allBalance;
-    bool public status;
-    uint256[] public reward;          // Reward in that round
-    uint256[] public resultHistory;
-    string[] public dateHistory;
-    string public nowDate;
-    uint256[] public allLottery;
-    mapping(address => uint256) public accountBuy;          // amount of buy lottery
-    // mapping(address => uint256[]) public myLottery;         // number of lottery
-      
-    uint256 public round;
-    // string public roundDate;
+    bool public status;                     // Status for check result
+    address payable public owner;           // Owner's address
+    uint256 public totalReward;             // Total reward
+    uint256 public round;                   // Round of lottery 
+    string public nowDate;                  // Round of awards
+    uint256[] public reward;                // Reward in each round
+    uint256[] public resultHistory;         // Result's history
+    string[] public dateHistory;            // Result date history
+    uint256[] public allLottery;            // All lottery in that round
+    uint256[][] public lotteryTemp;         // Array for return my lottery
+    
+    mapping(address =>  mapping(uint256 => uint256[])) public myLottery;    // All lottery of each person in each round
 
-    uint256[][] public lotteryTemp;
-    mapping(address => uint256) public amountTicket;
-    mapping(address =>  mapping(uint256 => uint256[])) public myNewLottery;
-
-
+    // Constructor function for set initial value
     constructor(){
         owner = payable(msg.sender);
         totalReward = 0;
         round = 0;
     }
 
-// ******************** Buy Ticket **************************
+// ************************************ Buy Lottery ************************************
+
+    // This function use for buy lottery.
     function buyNewLottery(uint256 fee, uint256 _number, address account) public payable{
         require(msg.value == fee && fee > 0);
-        accountBuy[account] += fee;
-        myNewLottery[account][round].push(_number);
+        myLottery[account][round].push(_number);
         allLottery.push(_number);
-        allBalance += fee;
         totalReward += fee;
     }
 
@@ -41,7 +35,7 @@ contract Lottery {
         return totalReward;
     }
 
-// ******************** History **************************
+// ********************************* Lottery Results ************************************
     function getHistoryResult() public view returns(uint256[] memory){
         return resultHistory;
     }
@@ -49,11 +43,10 @@ contract Lottery {
     function getHistoryDate() public view returns(string[] memory){
         return dateHistory;
     }
-
-  // ******************** My Ticket **************************  
+// ********************************* My Ticket ******************************************
      function getMyLottery(address account) public returns (uint256[][] memory){
         for (uint256 i = 0; i <= round; i++) {
-            lotteryTemp.push(myNewLottery[account][i]);
+            lotteryTemp.push(myLottery[account][i]);
         }
         return lotteryTemp;
     }
@@ -67,25 +60,17 @@ contract Lottery {
             status = false;
         }
 
-        uint256 length = myNewLottery[account][_round].length;
-        myNewLottery[account][_round][length-index-1] = myNewLottery[account][_round][length - 1];
-        myNewLottery[account][_round].pop();
+        // Delete array when alreay check
+        uint256 length = myLottery[account][_round].length;
+        myLottery[account][_round][length-index-1] = myLottery[account][_round][length - 1];
+        myLottery[account][_round].pop();
     }
 
     function getStatus() public view returns (bool){
         return status;
     }
 
-    function checkReward(uint256 _round) public view returns (uint256){
-        return reward[_round];
-    }
-
-    function getAllBalance() public view returns(uint256){
-        uint256 balance = address(this).balance;
-        return balance;
-    }
-
-// ******************** Admin **************************
+// ********************************* Admin ******************************************
     function checkIsAdmin(address account) public view returns(bool){
         if(account == owner){
             return true;

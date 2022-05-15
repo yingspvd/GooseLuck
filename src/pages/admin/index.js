@@ -51,7 +51,7 @@ export default function Admin() {
 
   const handleRandomNum = async () => {
     const _result = randomNumber(100, 999);
-    _result = 111;
+    _result = 453;
     const _date = new Date();
     const dateString = _date.toString();
     const dateArray = _date.toString().split(" ");

@@ -1,9 +1,9 @@
 import useAccount from "@hooks/useAccount";
 import { useLottery } from "@hooks/useContracts";
 import React, { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Web3 from "web3";
 import Navbar from "../../components/Navbar";
-import { useRouter } from "next/router";
 
 import {
   Container,
@@ -31,7 +31,7 @@ import {
 
 export default function BuyTicket() {
   const router = useRouter();
-  const lotteryFee = 1;
+  const lotteryFee = 1.23;
   const account = useAccount();
   const Lottery = useLottery();
   const [myWallet, setMyWallet] = useState(0);

@@ -9,7 +9,7 @@ const Home = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/buyTicket");
+    router.push("/buyLottery");
   });
 
   return (

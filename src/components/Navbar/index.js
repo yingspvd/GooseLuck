@@ -35,16 +35,16 @@ export default function Navbar({ ...props }) {
 
   return (
     <StyledNav>
-      <ItemContainer onClick={() => router.push("/buyTicket")}>
+      <ItemContainer onClick={() => router.push("/buyLottery")}>
         <StyledImage src="/gooseLuckLogo.svg" />
       </ItemContainer>
       <Menu>
         <MenuItem>
-          <StyledLink onClick={() => router.push("/buyTicket")}>
-            Buy Tickets
+          <StyledLink onClick={() => router.push("/buyLottery")}>
+            Buy Lottery
           </StyledLink>
-          <StyledLink onClick={() => router.push("/finishedRounds")}>
-            Finished Rounds
+          <StyledLink onClick={() => router.push("/lotteryResults")}>
+            Lottery Results
           </StyledLink>
           <StyledLink onClick={() => router.push("/myTicket")}>
             My Tickets

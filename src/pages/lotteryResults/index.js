@@ -53,7 +53,7 @@ export default function FinishedRounds() {
       <Navbar myWallet={myWallet} />
       <GreenBackground>
         <TitleContainer>
-          <BigText>FINISHED ROUNDS</BigText>
+          <BigText>LOTTERY RESULTS</BigText>
           <StyledImage src="/fried-egg.png" />
         </TitleContainer>
         <Board>
