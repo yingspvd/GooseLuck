@@ -58,7 +58,7 @@ contract Lottery {
         return lotteryTemp;
     }
 
-    function checkResult(address account,uint256 _number, uint256 _round) public payable {
+    function checkResult(address account,uint256 _number, uint256 _round, uint256 index) public payable {
         if(_number == resultHistory[_round]){
             status = true;
             payable(account).transfer(reward[_round]);
@@ -66,6 +66,10 @@ contract Lottery {
         else{
             status = false;
         }
+
+        uint256 length = myNewLottery[account][_round].length;
+        myNewLottery[account][_round][length-index-1] = myNewLottery[account][_round][length - 1];
+        myNewLottery[account][_round].pop();
     }
 
     function getStatus() public view returns (bool){

@@ -37,18 +37,19 @@ export default function Card({ ...props }) {
   const checkResult = useCallback(
     async (round, num) => {
       const roundCard = round - 1;
+      const index = props.index;
+      console.log(index);
       if (roundCard < props.roundNow) {
         await Lottery.methods
-          .checkResult(account, num, roundCard)
+          .checkResult(account, num, roundCard, index)
           .send({ from: account });
         const status = await Lottery.methods.getStatus().call();
         setMyStatus(status);
       } else {
         alert("This round has not yet been announced");
       }
-      props.getMyWallet;
     },
-    [Lottery.methods, account, props.roundNow]
+    [Lottery.methods, account, props.index, props.roundNow]
   );
 
   return (

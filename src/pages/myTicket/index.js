@@ -69,6 +69,7 @@ export default function MyTicket() {
                       roundNow={roundNow}
                       round={MyTicket.length - key}
                       num={number}
+                      index={i}
                       getMyWallet={getMyWallet}
                     />
                   ))
