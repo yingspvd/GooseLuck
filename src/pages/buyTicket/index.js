@@ -93,7 +93,7 @@ export default function BuyTicket() {
       const _dateNow = new Date();
       console.log(_dateNow);
       console.log(typeof _dateNow);
-      const addMinutes = new Date(_dateNow.getTime() + 1 * 60000);
+      const addMinutes = new Date(_dateNow.getTime() + 5 * 60000);
       // _dateNow.setDate(_dateNow.getDate() + 15);
       setFuture(addMinutes);
       const dateArray = addMinutes.toString().split(" ");
@@ -101,7 +101,7 @@ export default function BuyTicket() {
       // console.log("0: ", dateArray);
     } else {
       const dateObj = new Date(_date);
-      const addMinutes = new Date(dateObj.getTime() + 1 * 60000);
+      const addMinutes = new Date(dateObj.getTime() + 4 * 60000);
       setFuture(addMinutes);
       const dateArray = addMinutes.toString().split(" ");
       setDateNow(dateArray);

@@ -18,16 +18,21 @@ export default function Card({ ...props }) {
   const Lottery = useLottery();
 
   const [myStatus, setMyStatus] = useState();
-  const [myWallet, setMyWallet] = useState(0);
+  // const [myWallet, setMyWallet] = useState(0);
 
-  useEffect(() => {
-    getMyWallet();
-  }, [getMyWallet]);
+  // useEffect(() => {
+  //   getMyWallet();
+  // }, [getMyWallet]);
 
-  const getMyWallet = useCallback(async () => {
-    const _balance = await web3.eth.getBalance(account);
-    const test = parseFloat(Web3.utils.fromWei(_balance.toString(), "ether"));
-  }, [account]);
+  // const getMyWallet = useCallback(async () => {
+  //   const _balance = await web3.eth.getBalance(account);
+  //   const test = parseFloat(Web3.utils.fromWei(_balance.toString(), "ether"));
+  // }, [account]);
+
+  const checkAndUpdateWallet = () => {
+    checkResult(props.round, props.num);
+    props.getMyWallet;
+  };
 
   const checkResult = useCallback(
     async (round, num) => {
@@ -38,12 +43,12 @@ export default function Card({ ...props }) {
           .send({ from: account });
         const status = await Lottery.methods.getStatus().call();
         setMyStatus(status);
-        getMyWallet();
       } else {
         alert("This round has not yet been announced");
       }
+      props.getMyWallet;
     },
-    [Lottery.methods, account, getMyWallet, props.roundNow]
+    [Lottery.methods, account, props.roundNow]
   );
 
   return (
@@ -84,7 +89,7 @@ export default function Card({ ...props }) {
             <Number>{props.num}</Number>
           </Item>
           <Item>
-            <StyleButton onClick={() => checkResult(props.round, props.num)}>
+            <StyleButton onClick={() => checkAndUpdateWallet()}>
               Check
             </StyleButton>
           </Item>

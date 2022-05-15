@@ -31,6 +31,10 @@ export default function MyTicket() {
   const getMyWallet = useCallback(async () => {
     const _balance = await web3.eth.getBalance(account);
     setMyWallet(parseFloat(Web3.utils.fromWei(_balance.toString(), "ether")));
+    console.log(
+      "wallet",
+      parseFloat(Web3.utils.fromWei(_balance.toString(), "ether"))
+    );
   }, [account]);
 
   const getMyTicket = useCallback(async () => {
@@ -65,6 +69,7 @@ export default function MyTicket() {
                       roundNow={roundNow}
                       round={MyTicket.length - key}
                       num={number}
+                      getMyWallet={getMyWallet}
                     />
                   ))
               )}
