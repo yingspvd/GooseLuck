@@ -38,6 +38,7 @@ export default function BuyTicket() {
   const [myWallet, setMyWallet] = useState(0);
   const [totalReward, setTotalReward] = useState(0);
   const [ticketNumber, setTicketNumber] = useState(0);
+  const [round, setRound] = useState(0);
   const [dateNow, setDateNow] = useState("");
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
@@ -75,7 +76,8 @@ export default function BuyTicket() {
     getTotalReward();
     getMyWallet();
     getDateNow();
-  }, [getTotalReward, getMyWallet, getDateNow]);
+    getRound();
+  }, [getTotalReward, getMyWallet, getDateNow, getRound]);
 
   const getMyWallet = useCallback(async () => {
     const _balance = await web3.eth.getBalance(account);
@@ -85,6 +87,12 @@ export default function BuyTicket() {
   const getTotalReward = useCallback(async () => {
     const _reward = await Lottery.methods.getTotalReward().call();
     setTotalReward(Web3.utils.fromWei(_reward, "ether"));
+  }, [Lottery.methods]);
+
+  const getRound = useCallback(async () => {
+    const round = await Lottery.methods.getRound().call();
+    const roundInt = parseInt(round);
+    setRound(roundInt + 1);
   }, [Lottery.methods]);
 
   const getDateNow = useCallback(async () => {
@@ -98,7 +106,6 @@ export default function BuyTicket() {
       setFuture(addMinutes);
       const dateArray = addMinutes.toString().split(" ");
       setDateNow(dateArray);
-      // console.log("0: ", dateArray);
     } else {
       const dateObj = new Date(_date);
       const addMinutes = new Date(dateObj.getTime() + 4 * 60000);
@@ -181,7 +188,7 @@ export default function BuyTicket() {
         <TimeContainer>
           <InfoBrown style={{ marginRight: 60 }}>Next Draw</InfoBrown>
           <InfoBrown style={{ fontSize: 16 }}>
-            Round 50 | Draw: {dateNow[0]} {dateNow[1]} {dateNow[2]},{" "}
+            Round {round} | Draw: {dateNow[0]} {dateNow[1]} {dateNow[2]},{" "}
             {dateNow[3]}, {dateNow[4]}
           </InfoBrown>
         </TimeContainer>
