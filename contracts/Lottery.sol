@@ -136,8 +136,12 @@ contract Lottery {
     
     }
 
-      function getRound() public view returns(uint256 ) {
+    function getRound() public view returns(uint256 ) {
         return round;
+    }
+
+    function updateDate(string memory date) public {
+        nowDate = date;
     }
 
 }

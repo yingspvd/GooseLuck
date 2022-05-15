@@ -49,22 +49,6 @@ export default function BuyTicket() {
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
 
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  const DateNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setTimeLeft(calculateTimeLeft());
@@ -95,16 +79,22 @@ export default function BuyTicket() {
     setRound(roundInt + 1);
   }, [Lottery.methods]);
 
+  const updateDate = useCallback(
+    async (date) => {
+      await Lottery.methods.updateDate(date).send({ from: account });
+    },
+    [Lottery.methods, account]
+  );
+
   const getDateNow = useCallback(async () => {
     const _date = await Lottery.methods.getDateNow().call();
     if (_date.length == 0) {
       const _dateNow = new Date();
-      console.log(_dateNow);
-      console.log(typeof _dateNow);
       const addMinutes = new Date(_dateNow.getTime() + 5 * 60000);
-      // _dateNow.setDate(_dateNow.getDate() + 15);
-      setFuture(addMinutes);
       const dateArray = addMinutes.toString().split(" ");
+      // _dateNow.setDate(_dateNow.getDate() + 15);
+      updateDate(_dateNow.toString());
+      setFuture(addMinutes);
       setDateNow(dateArray);
     } else {
       const dateObj = new Date(_date);
@@ -114,7 +104,7 @@ export default function BuyTicket() {
       setDateNow(dateArray);
       console.log("db: ", _date);
     }
-  }, [Lottery.methods]);
+  }, [Lottery.methods, updateDate]);
 
   const handleBuyTicket = async () => {
     if (ticketNumber >= 100 && ticketNumber <= 999) {
