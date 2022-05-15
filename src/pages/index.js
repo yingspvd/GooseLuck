@@ -1,10 +1,17 @@
 import Head from "next/head";
 import styles from "@styles/Home.module.css";
-
+import { useRouter } from "next/router";
 import useAccount from "@hooks/useAccount";
+import { useEffect } from "react";
 
 const Home = () => {
   const account = useAccount();
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/buyTicket");
+  });
+
   return (
     <div className={styles.container}>
       <Head>
