@@ -18,6 +18,7 @@ import {
   Detail,
   Text,
   Separate,
+  InputNumber,
 } from "./styled";
 
 export default function Admin() {
@@ -99,6 +100,16 @@ export default function Admin() {
             >
               {numTicket}
             </Text>
+          </Detail>
+          <Separate />
+          <Detail>
+            <Text>Add Reward</Text>
+            <InputNumber placeholder="ENTER NUMBER" type="number" />
+            <StyledButton
+              style={{ fontSize: "20px", letterSpacing: "4px", background: "#EEC829" }}
+            >
+              Add
+            </StyledButton>
           </Detail>
           <Separate />
           <Detail>

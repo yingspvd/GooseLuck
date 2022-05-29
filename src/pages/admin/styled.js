@@ -88,6 +88,7 @@ export const StyledButton = styled.div`
 
 export const DetailContainer = styled.div`
   width: 100%;
+  height: 80%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -109,6 +110,21 @@ export const Text = styled.div`
 export const Separate = styled.div`
   height: 150px;
   width: 3px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 5px;
+`;
+
+export const InputNumber = styled.input`
+  color: #4c403f;
+  background-color: #cdad9e;
+  width: 350px;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 14px;
+  &::placeholder {
+    letter-spacing: 2px;
+    text-align: center;
+  }
 `;
