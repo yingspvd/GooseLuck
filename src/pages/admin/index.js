@@ -70,9 +70,7 @@ export default function Admin() {
   };
 
   const handleAddReward = async () => {
-    console.log("RE ", addReward);
     const _add = Web3.utils.toWei(addReward.toString(), "ether");
-    console.log("_add ", _add);
     await Lottery.methods.addReward(_add).send({ from: account, value: _add });
   };
 
@@ -113,7 +111,7 @@ export default function Admin() {
           <Detail>
             <Text>Add Reward</Text>
             <InputNumber
-              placeholder="ENTER NUMBER"
+              placeholder="ENTER NUMBER (ETH)"
               type="number"
               onChange={(e) => setAddReward(e.target.value)}
             />

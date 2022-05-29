@@ -25,7 +25,6 @@ export default function MyTicket() {
     getMyWallet();
     getMyTicket();
     getRound();
-    console.log("getWallet");
   }, [getMyWallet, getMyTicket, getRound]);
 
   const getMyWallet = useCallback(async () => {
