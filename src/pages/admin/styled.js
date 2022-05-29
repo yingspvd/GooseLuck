@@ -95,6 +95,7 @@ export const DetailContainer = styled.div`
 `;
 
 export const Detail = styled.div`
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
