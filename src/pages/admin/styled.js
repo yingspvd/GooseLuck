@@ -118,10 +118,11 @@ export const Separate = styled.div`
 export const InputNumber = styled.input`
   color: #4c403f;
   background-color: #cdad9e;
-  width: 350px;
-  height: 50px;
+  width: 300px;
+  height: 40px;
   border: none;
   border-radius: 10px;
+  margin-top: 15px;
   text-align: center;
   font-size: 14px;
   &::placeholder {

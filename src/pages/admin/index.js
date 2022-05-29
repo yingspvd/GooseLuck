@@ -120,9 +120,11 @@ export default function Admin() {
             <StyledButton
               onClick={handleAddReward}
               style={{
-                fontSize: "20px",
+                fontSize: "16px",
                 letterSpacing: "4px",
                 background: "#EEC829",
+                height: "40px",
+                color: "#000000",
               }}
             >
               Add
