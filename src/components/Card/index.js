@@ -1,6 +1,5 @@
 import useAccount from "@hooks/useAccount";
 import { useLottery } from "@hooks/useContracts";
-import Web3 from "web3";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   CardContainer,
@@ -18,20 +17,9 @@ export default function Card({ ...props }) {
   const Lottery = useLottery();
 
   const [myStatus, setMyStatus] = useState();
-  // const [myWallet, setMyWallet] = useState(0);
-
-  // useEffect(() => {
-  //   getMyWallet();
-  // }, [getMyWallet]);
-
-  // const getMyWallet = useCallback(async () => {
-  //   const _balance = await web3.eth.getBalance(account);
-  //   const test = parseFloat(Web3.utils.fromWei(_balance.toString(), "ether"));
-  // }, [account]);
 
   const checkAndUpdateWallet = () => {
     checkResult(props.round, props.num);
-    props.getMyWallet;
   };
 
   const checkResult = useCallback(
@@ -48,6 +36,7 @@ export default function Card({ ...props }) {
       } else {
         alert("This round has not yet been announced");
       }
+      props.updateWallet();
     },
     [Lottery.methods, account, props.index, props.roundNow]
   );

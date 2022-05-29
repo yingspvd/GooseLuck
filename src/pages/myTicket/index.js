@@ -25,6 +25,7 @@ export default function MyTicket() {
     getMyWallet();
     getMyTicket();
     getRound();
+    console.log("getWallet");
   }, [getMyWallet, getMyTicket, getRound]);
 
   const getMyWallet = useCallback(async () => {
@@ -41,6 +42,10 @@ export default function MyTicket() {
     const _round = await Lottery.methods.getRound().call();
     setRoundNow(_round);
   }, [Lottery.methods]);
+
+  const updateWallet = () => {
+    getMyWallet();
+  }
 
   return (
     <Container>
@@ -65,7 +70,7 @@ export default function MyTicket() {
                       round={MyTicket.length - key}
                       num={number}
                       index={i}
-                      getMyWallet={getMyWallet}
+                      updateWallet={updateWallet}
                     />
                   ))
               )}

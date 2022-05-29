@@ -221,7 +221,7 @@ export default function BuyTicket() {
             </InputContainer>
           </>
         ) : (
-          <StyledButton onClick={() => router.push("/finishedRounds")}>
+          <StyledButton onClick={() => router.push("/lotteryResults")}>
             Lottery Result
           </StyledButton>
         )}
