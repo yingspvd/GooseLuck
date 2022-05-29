@@ -106,7 +106,7 @@ export default function Admin() {
             <Text>Add Reward</Text>
             <InputNumber placeholder="ENTER NUMBER" type="number" />
             <StyledButton
-              style={{ fontSize: "20px", letterSpacing: "4px", background: "#EEC829" }}
+              style={{ fontSize: "16px", letterSpacing: "4px", background: "#EEC829", height: "40px", color: "#000000" }}
             >
               Add
             </StyledButton>
