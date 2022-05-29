@@ -1,5 +1,5 @@
 # Goose Luck 🦆
-This project is a part CPE494 Blockchain Technology course. To learn about the Truffle and Ganache Ethereum smart contract development platform, as well as basics of how smart contracts work and how they are deployed onto the chain.
+This project is a part CPE494 Blockchain Technology course. To learn how to write Smart Contract in Solidity language with Truffle Suite, to study the creation of Private Blockchain, and learn to how they are deployed onto the chain.
 
 ## ☑️ Requirements
 * Ganache
