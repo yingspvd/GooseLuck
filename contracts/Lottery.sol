@@ -35,6 +35,7 @@ contract Lottery {
         return totalReward;
     }
 
+
 // ********************************* Lottery Results ************************************
     function getHistoryResult() public view returns(uint256[] memory){
         return resultHistory;
@@ -98,9 +99,13 @@ contract Lottery {
         return count;
     }
 
-    function keepResult(uint256 result, string memory anounce, string memory _nowDate) public {
+    function keepResult(uint256 result, string memory anounce, string memory _nowDate) public payable{
         uint256 _reward = 0;
         uint256 count = 0;
+        uint256 rewardDeduct = 0;
+        uint256 rewardOwner = 0;
+        uint256 rewardReturn = 0;
+
         resultHistory.push(result);
    
         count = calculateReward();
@@ -109,8 +114,14 @@ contract Lottery {
             _reward = 0;
         }
         else{
+            rewardDeduct = (totalReward * 20) / 100;
+            rewardOwner = (rewardDeduct * 20) / 100;
+            rewardReturn = rewardDeduct - rewardOwner;
+
+            totalReward = totalReward - rewardDeduct;
+            payable(owner).transfer(rewardOwner);
             _reward = totalReward / count;
-            totalReward = 0;
+            totalReward = rewardReturn;
         }
 
         reward.push(_reward);
@@ -119,6 +130,11 @@ contract Lottery {
         round += 1;
         delete allLottery;
     
+    }
+
+    function addReward(uint256 _amount) public payable{
+        require(msg.value == _amount && _amount > 0);
+        totalReward += msg.value;
     }
 
     function getRound() public view returns(uint256 ) {

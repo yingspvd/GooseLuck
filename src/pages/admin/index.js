@@ -28,6 +28,7 @@ export default function Admin() {
   const [totalReward, setTotalReward] = useState(0);
   const [numTicket, setNumTicket] = useState(0);
   const [result, setResult] = useState(0);
+  const [addReward, setAddReward] = useState(0);
 
   useEffect(() => {
     getTotalReward();
@@ -68,6 +69,13 @@ export default function Admin() {
     getMyWallet();
   };
 
+  const handleAddReward = async () => {
+    console.log("RE ", addReward);
+    const _add = Web3.utils.toWei(addReward.toString(), "ether");
+    console.log("_add ", _add);
+    await Lottery.methods.addReward(_add).send({ from: account, value: _add });
+  };
+
   const randomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
@@ -104,9 +112,18 @@ export default function Admin() {
           <Separate />
           <Detail>
             <Text>Add Reward</Text>
-            <InputNumber placeholder="ENTER NUMBER" type="number" />
+            <InputNumber
+              placeholder="ENTER NUMBER"
+              type="number"
+              onChange={(e) => setAddReward(e.target.value)}
+            />
             <StyledButton
-              style={{ fontSize: "20px", letterSpacing: "4px", background: "#EEC829" }}
+              onClick={handleAddReward}
+              style={{
+                fontSize: "20px",
+                letterSpacing: "4px",
+                background: "#EEC829",
+              }}
             >
               Add
             </StyledButton>
