@@ -53,7 +53,7 @@ export default function Admin() {
 
   const handleRandomNum = async () => {
     const _result = randomNumber(100, 999);
-    _result = 453;
+    _result = 305;
     const _date = new Date();
     const dateString = _date.toString();
     const dateArray = _date.toString().split(" ");
@@ -72,6 +72,7 @@ export default function Admin() {
   const handleAddReward = async () => {
     const _add = Web3.utils.toWei(addReward.toString(), "ether");
     await Lottery.methods.addReward(_add).send({ from: account, value: _add });
+    getTotalReward();
   };
 
   const randomNumber = (min, max) => {

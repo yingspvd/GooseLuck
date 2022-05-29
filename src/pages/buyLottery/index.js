@@ -89,7 +89,7 @@ export default function BuyTicket() {
     const _date = await Lottery.methods.getDateNow().call();
     if (_date.length == 0) {
       const _dateNow = new Date();
-      const addMinutes = new Date(_dateNow.getTime() + 5 * 60000);
+      const addMinutes = new Date(_dateNow.getTime() + 3 * 60000);
       const dateArray = addMinutes.toString().split(" ");
       // _dateNow.setDate(_dateNow.getDate() + 15);
       updateDate(_dateNow.toString());
@@ -97,7 +97,7 @@ export default function BuyTicket() {
       setDateNow(dateArray);
     } else {
       const dateObj = new Date(_date);
-      const addMinutes = new Date(dateObj.getTime() + 4 * 60000);
+      const addMinutes = new Date(dateObj.getTime() + 3 * 60000);
       setFuture(addMinutes);
       const dateArray = addMinutes.toString().split(" ");
       setDateNow(dateArray);
@@ -205,7 +205,7 @@ export default function BuyTicket() {
       <BrownBackground>
         {difference > 0 ? (
           <>
-            <InfoWhite>Get your tickets now!</InfoWhite>
+            <InfoWhite>Get your tickets now! (1.23 ETH)</InfoWhite>
             <InputContainer>
               <InputNumber
                 placeholder="ENTER 3 DIGIT NUMBER"
